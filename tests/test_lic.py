@@ -39,3 +39,44 @@ def test_lic_5() -> None:
     assert not lic_5(points)
     points = [(1, 2), (3, 4), (4, 5)]
     assert not lic_5(points)
+def test_lic_1() -> None:
+    '''
+    There exists at least one set of three consecutive data points
+    that cannot all be contained within or on a circle of radius RADIUS1.
+    (0 ≤ RADIUS1)
+    '''
+
+    # Invalid radius
+    points = [(0, 0), (0, 2),(1,1)]
+    radius = -1
+    assert not lic_1(points,radius)
+
+    # Too small radius
+    points = [(0, 0), (0, 2),(1,1)]
+    radius = 0.5
+    assert lic_1(points,radius)
+
+    # Exact radius
+    points = [(0, 0), (0, 2),(1,1)]
+    radius = 1
+    assert not lic_1(points,radius)
+
+    # Larger radius
+    points = [(0, 0), (0, 2),(1,1)]
+    radius = 2
+    assert not lic_1(points,radius)
+
+    # Two overlapping sets, none uncontainable
+    points = [(-1,2),(0, 0), (0, 2),(1,2)]
+    radius = 1
+    assert lic_1(points,radius)
+
+    # Two overlapping sets, one uncontainable
+    points = [(-1,1),(0, 0), (0, 2),(1,2)]
+    radius = 1
+    assert lic_1(points,radius)
+
+    # Two overlapping sets, both containable
+    points = [(-1,1),(0, 0), (0, 2),(1,1)]
+    radius = 1
+    assert not lic_1(points,radius)

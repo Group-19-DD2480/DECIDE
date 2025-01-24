@@ -1,4 +1,5 @@
 import math
+import numpy as np
 
 def lic_2(points: list[tuple[float, float]], epsilon: float) -> bool:
     """ 
@@ -80,4 +81,35 @@ def lic_5(points: list[tuple[float, float]]) -> bool:
     for (x_i, _), (x_j, _) in zip(points, points[1:]):
         if x_j - x_i < 0:
             return True
+    return False
+
+def lic_1(points: list[tuple[float, float]], radius: float) -> bool:
+    '''
+    There exists at least one set of three consecutive data points
+    that cannot all be contained within or on a circle of radius RADIUS1.
+    (0 ≤ RADIUS1)
+
+    '''
+
+    # Tolerance for comparing exact radius match
+    REL_TOL = 1+1e-09
+
+    if radius < 0:
+        return False
+
+    for set in zip(points, points[1:],points[2:]):
+        # Calculate sides of the triangle formed by the points
+        set = np.array(set)
+        a = np.linalg.norm(set[0] - set[1])
+        b = np.linalg.norm(set[0] - set[2])
+        c = np.linalg.norm(set[1] - set[2])
+
+        # Calculate the circumcircle radius
+        cc_radius = a * b * c / np.sqrt((a+b+c)*(b+c-a)*(a+c-b)*(a+b-c))
+
+        # Return True if the circumcircle radius is larger and thus uncontainable by radius
+        if cc_radius  > radius * REL_TOL:
+            return True
+
+    # If all sets are containable
     return False
