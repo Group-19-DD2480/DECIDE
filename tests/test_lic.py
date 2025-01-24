@@ -13,17 +13,17 @@ def test_lic_0() -> None:
     (0 ≤ LENGTH1)
     """
 
-    # Valid test case
-    points = [(0, 0), (0, 1), (0, 2), (0, 3)]
-    length_1 = 2
-    assert lic_0(points, length_1) == True
-
-    # Invalid test case
-    points = [(0, 0), (0, 5), (10, 10), (100, 100)]
+    # Invalid test case: Condition is false (distance ≤ LENGTH1)
+    points = [(0, 0), (0, 1)]
     length_1 = 2
     assert lic_0(points, length_1) == False
 
-    # Single point
+    # Valid test case: Condition is true (distance > LENGTH1)
+    points = [(0, 0), (0, 5), (10, 10), (100, 100)]
+    length_1 = 2
+    assert lic_0(points, length_1) == True
+
+    # Single point: (raises exception)
     points = [(0, 0)]
     length_1 = 2
     assert lic_0(points, length_1) == False
