@@ -51,6 +51,11 @@ def test_lic_1() -> None:
     radius = 1
     assert not lic_1(points, radius)
 
+    # Two overlapping sets, both containable
+    points = [(-1,1),(0, 0), (0, 2),(1,1)]
+    radius = 1
+    assert not lic_1(points,radius)
+
 
 def test_lic_2() -> None:
     """
@@ -134,3 +139,149 @@ def test_lic_7():
     k_pts = 1
     length_1 = np.sqrt(8)  # sqrt((2-0)^2 + (2-0)^2) = sqrt(8)
     assert lic_7(points, k_pts, length_1) == False
+
+
+def test_lic_13() -> None:
+    '''
+    There exists at least one set of three data points separated by exactly A PTS and B PTS
+    consecutive intervening points, respectively, that cannot be contained within or on a circle of
+    radius RADIUS1. The condition is not met when NUMPOINTS < 5.
+    1 ≤ A PTS, 1 ≤ B PTS
+    A PTS+B PTS ≤ (NUMPOINTS−3)
+    '''
+
+    # Invalid radius1
+    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    radius1 = -1
+    radius2 = 1
+    a_pts = 1
+    b_pts = 1
+    assert not lic_13(points,radius1,radius2,a_pts,b_pts)
+
+    # Invalid radius2
+    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    radius1 = 1
+    radius2 = -1
+    a_pts = 1
+    b_pts = 1
+    assert not lic_13(points,radius1,radius2,a_pts,b_pts)
+
+    # Invalid a_pts
+    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    radius1 = 1
+    radius2 = 1
+    a_pts = -1
+    b_pts = 1
+    assert not lic_13(points,radius1,radius2,a_pts,b_pts)
+
+    # Invalid b_pts
+    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    radius1 = 1
+    radius2 = 1
+    a_pts = 1
+    b_pts = -1
+    assert not lic_13(points,radius1,radius2,a_pts,b_pts)
+
+    # Invalid numpoints
+    points = [(0, 0), (-1,-1), (0, 2), (1,1)]
+    radius1 = 1
+    radius2 = 1
+    a_pts = 1
+    b_pts = 1
+    assert not lic_13(points,radius1,radius2,a_pts,b_pts)
+
+    # Invalid a_pts, b_pts and numpoints combination
+    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    radius1 = 1
+    radius2 = 1
+    a_pts = 2
+    b_pts = 1
+    assert not lic_13(points,radius1,radius2,a_pts,b_pts)
+
+    # Smaller radius1, smaller radius 2
+    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    radius1 = 0.5
+    radius2 = 0.5
+    a_pts = 1
+    b_pts = 1
+    assert not lic_13(points,radius1,radius2,a_pts,b_pts)
+
+    # Smaller radius1, exact radius 2
+    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    radius1 = 0.5
+    radius2 = 1
+    a_pts = 1
+    b_pts = 1
+    assert lic_13(points,radius1,radius2,a_pts,b_pts)
+
+    # Smaller radius1, larger radius 2
+    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    radius1 = 0.5
+    radius2 = 2
+    a_pts = 1
+    b_pts = 1
+    assert lic_13(points,radius1,radius2,a_pts,b_pts)
+    
+    # Exact radius1, larger radius 2
+    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    radius1 = 1
+    radius2 = 2
+    a_pts = 1
+    b_pts = 1
+    assert not lic_13(points,radius1,radius2,a_pts,b_pts)
+    
+    # Larger radius1, larger radius 2
+    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    radius1 = 2
+    radius2 = 2
+    a_pts = 1
+    b_pts = 1
+    assert not lic_13(points,radius1,radius2,a_pts,b_pts)
+
+    # Two sets, none containable by either radius
+    points = [(-1,2), (0, 0), (0, 0), (0, 2), (0, 2), (1,2)]
+    radius1 = 1
+    radius2 = 1
+    a_pts = 1
+    b_pts = 1
+    assert not lic_13(points,radius1,radius2,a_pts,b_pts)
+
+    # Two sets, both containable by both radius
+    points = [(-1,1), (0, 0), (0, 0), (0, 2), (0, 2), (1,1)]
+    radius1 = 1
+    radius2 = 1
+    a_pts = 1
+    b_pts = 1
+    assert not lic_13(points,radius1,radius2,a_pts,b_pts)
+
+    # Two  sets with same radius where radius1 < radius <= radius2
+    points = [(-1,1), (0, 0), (0, 0), (0, 2), (0, 2), (1,1)]
+    radius1 = 0.5
+    radius2 = 1
+    a_pts = 1
+    b_pts = 1
+    assert lic_13(points,radius1,radius2,a_pts,b_pts)
+
+    # Two  sets with diffrent radii wehre set 1 radius <= radius1 < set 2 radius <= radius2
+    points = [(-1,1), (0, 0), (0, 0), (0, 4), (0, 2), (2,2)]
+    radius1 = 1
+    radius2 = 2
+    a_pts = 1
+    b_pts = 1
+    assert lic_13(points,radius1,radius2,a_pts,b_pts)
+
+    # Two  sets with diffrent radii wehre set 1 radius <= radius1 <= radius2 < set 2 radius
+    points = [(-1,1), (0, 0), (0, 0), (0, 4), (0, 2), (2,2)]
+    radius1 = 1
+    radius2 = 1
+    a_pts = 1
+    b_pts = 1
+    assert lic_13(points,radius1,radius2,a_pts,b_pts)
+
+    # Two  sets with diffrent radii wehre  radius1 < set 1 radius <= radius2 < set 2 radius
+    points = [(-1,1), (0, 0), (0, 0), (0, 4), (0, 2), (2,2)]
+    radius1 = 0.5
+    radius2 = 1
+    a_pts = 1
+    b_pts = 1
+    assert lic_13(points,radius1,radius2,a_pts,b_pts)
