@@ -184,6 +184,39 @@ def lic_7(points: list[tuple[float, float]], k_pts: int, length_1: float) -> boo
             return True
     return False
 
+def lic_8(points: list[tuple[float, float]], radius: float, a_pts: int, b_pts: int) -> bool:
+    '''
+     There exists at least one set of three data points separated by exactly A PTS and B PTS
+    consecutive intervening points, respectively, that cannot be contained within or on a circle of
+    radius RADIUS1. The condition is not met when NUMPOINTS < 5.
+    1 ≤ A PTS, 1 ≤ B PTS
+    A PTS+B PTS ≤ (NUMPOINTS−3)
+
+    '''
+    
+    # Tolerance for comparing exact radius match
+    REL_TOL = 1+1e-09
+
+    # Invalid parameters
+    if radius < 0 or a_pts < 1 or b_pts <1 or len(points) < a_pts + b_pts + 3:
+        return False
+
+    for set in zip(points, points[1+a_pts:],points[2+a_pts+b_pts:]):
+        # Calculate sides of the triangle formed by the points
+        set = np.array(set)
+        a = np.linalg.norm(set[0] - set[1])
+        b = np.linalg.norm(set[0] - set[2])
+        c = np.linalg.norm(set[1] - set[2])
+
+        # Calculate the circumcircle radius
+        cc_radius = a * b * c / np.sqrt((a+b+c)*(b+c-a)*(a+c-b)*(a+b-c))
+        # Return True if the circumcircle radius is larger and thus uncontainable by radius
+        if cc_radius  > radius * REL_TOL:
+            return True
+
+    # If all sets are containable
+    return False
+  
 def lic_13(points: list[tuple[float, float]], radius1: float, radius2: float, a_pts: int, b_pts: int) -> bool:
     '''
     There exists at least one set of three data points, separated by exactly A PTS and B PTS
@@ -222,6 +255,5 @@ def lic_13(points: list[tuple[float, float]], radius1: float, radius2: float, a_
             radius1_uncont = True
         if cc_radius  <= radius2 * REL_TOL:
             radius2_cont = True
-
     # Return True only if both radii conditions are satisfied
     return radius1_uncont and radius2_cont

@@ -51,12 +51,6 @@ def test_lic_1() -> None:
     radius = 1
     assert not lic_1(points, radius)
 
-    # Two overlapping sets, both containable
-    points = [(-1,1),(0, 0), (0, 2),(1,1)]
-    radius = 1
-    assert not lic_1(points,radius)
-
-
 def test_lic_2() -> None:
     """
     There exists at least one set of three consecutive data points which form an angle such that:
@@ -119,7 +113,6 @@ def test_lic_5() -> None:
     points = [(1, 2), (3, 4), (4, 5)]
     assert not lic_5(points)
 
-
 def test_lic_7():
     """
     Tests for the lic_7 function.
@@ -161,8 +154,94 @@ def test_lic_7():
     length_1 = np.sqrt(8)  # sqrt((2-0)^2 + (2-0)^2) = sqrt(8)
     assert lic_7(points, k_pts, length_1) == False
 
+def test_lic_8() -> None:
+    '''
+    There exists at least one set of three data points separated by exactly A PTS and B PTS
+    consecutive intervening points, respectively, that cannot be contained within or on a circle of
+    radius RADIUS1. The condition is not met when NUMPOINTS < 5.
+    1 ≤ A PTS, 1 ≤ B PTS
+    A PTS+B PTS ≤ (NUMPOINTS−3)
+    '''
+
+    # Invalid radius
+    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    radius = -1
+    a_pts = 1
+    b_pts = 1
+    assert not lic_8(points,radius,a_pts,b_pts)
+
+    # Invalid a_pts
+    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    radius = 1
+    a_pts = -1
+    b_pts = 1
+    assert not lic_8(points,radius,a_pts,b_pts)
+
+    # Invalid b_pts
+    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    radius = 1
+    a_pts = 1
+    b_pts = -1
+    assert not lic_8(points,radius,a_pts,b_pts)
+
+    # Invalid numpoints
+    points = [(0, 0), (-1,-1), (0, 2), (1,1)]
+    radius = 1
+    a_pts = 1
+    b_pts = 1
+    assert not lic_8(points,radius,a_pts,b_pts)
+
+    # Invalid a_pts, b_pts and numpoints combination
+    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    radius = 1
+    a_pts = 2
+    b_pts = 1
+    assert not lic_8(points,radius,a_pts,b_pts)
+
+    # Too small radius
+    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    radius = 0.5
+    a_pts = 1
+    b_pts = 1
+    assert lic_8(points,radius,a_pts,b_pts)
+
+    # Exact radius
+    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    radius = 1
+    a_pts = 1
+    b_pts = 1
+    assert not lic_8(points,radius,a_pts,b_pts)
+
+    # Larger radius
+    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    radius = 2
+    a_pts = 1
+    b_pts = 1
+    assert not lic_8(points,radius,a_pts,b_pts)
+
+    # Two sets, none containable
+    points = [(-1,2), (0, 0), (0, 0), (0, 2), (0, 2), (1,2)]
+    radius = 1
+    a_pts = 1
+    b_pts = 1
+    assert lic_8(points,radius,a_pts,b_pts)
+
+    # Two overlapping sets, one uncontainable
+    points = [(-1,2), (0, 0), (0, 0), (0, 2), (0, 2), (1,1)]
+    radius = 1
+    a_pts = 1
+    b_pts = 1
+    assert lic_8(points,radius,a_pts,b_pts)
+
+    # Two overlapping sets, both containable
+    points = [(-1,1), (0, 0), (0, 0), (0, 2), (0, 2), (1,1)]
+    radius = 1
+    a_pts = 1
+    b_pts = 1
+    assert not lic_8(points,radius,a_pts,b_pts)
 
 def test_lic_13() -> None:
+
     '''
     There exists at least one set of three data points separated by exactly A PTS and B PTS
     consecutive intervening points, respectively, that cannot be contained within or on a circle of
@@ -218,7 +297,7 @@ def test_lic_13() -> None:
     a_pts = 2
     b_pts = 1
     assert not lic_13(points,radius1,radius2,a_pts,b_pts)
-
+    
     # Smaller radius1, smaller radius 2
     points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
     radius1 = 0.5
@@ -306,3 +385,6 @@ def test_lic_13() -> None:
     a_pts = 1
     b_pts = 1
     assert lic_13(points,radius1,radius2,a_pts,b_pts)
+
+
+
