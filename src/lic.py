@@ -126,4 +126,32 @@ def lic_13(points: list[tuple[float, float]], radius1: float, radius2: float, a_
     0 ≤ RADIUS2
 
     '''
-    pass
+    
+    # Tolerance for comparing exact radius match
+    REL_TOL = 1+1e-09
+
+    # Invalid parameters
+    if radius1 < 0 or radius2 < 0 or a_pts < 1 or b_pts <1 or len(points) < a_pts + b_pts + 3:
+        return False
+    
+    radius1_uncont = False
+    radius2_cont = False
+
+    for set in zip(points, points[1+a_pts:],points[2+a_pts+b_pts:]):
+        # Calculate sides of the triangle formed by the points
+        set = np.array(set)
+        a = np.linalg.norm(set[0] - set[1])
+        b = np.linalg.norm(set[0] - set[2])
+        c = np.linalg.norm(set[1] - set[2])
+
+        # Calculate the circumcircle radius
+        cc_radius = a * b * c / np.sqrt((a+b+c)*(b+c-a)*(a+c-b)*(a+b-c))
+
+        # Compare the circumricle radius to radius1 and radius2
+        if cc_radius  > radius1 * REL_TOL:
+            radius1_uncont = True
+        if cc_radius  <= radius2 * REL_TOL:
+            radius2_cont = True
+
+    # Return True only if both radii conditions are satisfied
+    return radius1_uncont and radius2_cont
