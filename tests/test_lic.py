@@ -8,47 +8,6 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../src"
 from lic import *
 
 
-def test_lic_7():
-    """
-    Tests for the lic_7 function.
-    """
-
-    # Condition met (distance > length_1)
-    points = [(0, 0), (1, 1), (6, 6), (10, 10)]
-    k_pts = 1
-    length_1 = 5
-    assert lic_7(points, k_pts, length_1) == True
-
-    # Condition not met (all distances <= length_1)
-    points = [(0, 0), (1, 1), (2, 2), (3, 3)]
-    k_pts = 1
-    length_1 = 5
-    assert lic_7(points, k_pts, length_1) == False
-
-    # NUMPOINTS < 3 (invalid case)
-    points = [(0, 0), (1, 1)]
-    k_pts = 1
-    length_1 = 1
-    assert lic_7(points, k_pts, length_1) == False
-
-    # Invalid k_pts (k_pts > NUMPOINTS - 2)
-    points = [(0, 0), (2, 1), (2, 5), (3, 3)]
-    k_pts = 3
-    length_1 = 1
-    assert lic_7(points, k_pts, length_1) == False
-
-    # Invalid k_pts (k_ps < 1)
-    points = [(0, 0), (1, 1), (2, 0), (3, 4)]
-    k_pts = 0
-    length_1 = 1
-    assert lic_7(points, k_pts, length_1) == False
-
-    # Distance exactly equal to length_1 (not > length_1)
-    points = [(0, 0), (1, 1), (2, 2)]
-    k_pts = 1
-    length_1 = np.sqrt(8)  # sqrt((2-0)^2 + (2-0)^2) = sqrt(8)
-    assert lic_7(points, k_pts, length_1) == False
-
 
 def test_lic_1() -> None:
     """
@@ -133,3 +92,45 @@ def test_lic_5() -> None:
     assert not lic_5(points)
     points = [(1, 2), (3, 4), (4, 5)]
     assert not lic_5(points)
+
+
+def test_lic_7():
+    """
+    Tests for the lic_7 function.
+    """
+
+    # Condition met (distance > length_1)
+    points = [(0, 0), (1, 1), (6, 6), (10, 10)]
+    k_pts = 1
+    length_1 = 5
+    assert lic_7(points, k_pts, length_1) == True
+
+    # Condition not met (all distances <= length_1)
+    points = [(0, 0), (1, 1), (2, 2), (3, 3)]
+    k_pts = 1
+    length_1 = 5
+    assert lic_7(points, k_pts, length_1) == False
+
+    # NUMPOINTS < 3 (invalid case)
+    points = [(0, 0), (1, 1)]
+    k_pts = 1
+    length_1 = 1
+    assert lic_7(points, k_pts, length_1) == False
+
+    # Invalid k_pts (k_pts > NUMPOINTS - 2)
+    points = [(0, 0), (2, 1), (2, 5), (3, 3)]
+    k_pts = 3
+    length_1 = 1
+    assert lic_7(points, k_pts, length_1) == False
+
+    # Invalid k_pts (k_ps < 1)
+    points = [(0, 0), (1, 1), (2, 0), (3, 4)]
+    k_pts = 0
+    length_1 = 1
+    assert lic_7(points, k_pts, length_1) == False
+
+    # Distance exactly equal to length_1 (not > length_1)
+    points = [(0, 0), (1, 1), (2, 2)]
+    k_pts = 1
+    length_1 = np.sqrt(8)  # sqrt((2-0)^2 + (2-0)^2) = sqrt(8)
+    assert lic_7(points, k_pts, length_1) == False

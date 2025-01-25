@@ -37,34 +37,6 @@ def lic_1(points: list[tuple[float, float]], radius: float) -> bool:
     return False
 
 
-def lic_7(points: list[tuple[float, float]], k_pts: int, length_1: float) -> bool:
-    """
-    Determines if there exists at least one set of two data points separated by exactly
-    k_pts consecutive intervening points that are a euclidean_dist greater than length_1 apart.
-
-    Parameters:
-        points (list[tuple[float, float]]): A list of 2D points [(x1, y1), (x2, y2), ...].
-        k_pts (int): Number of consecutive intervening points between the two points.
-        length_1 (float): Threshold euclidean_dist.
-
-    Returns:
-        bool: True if the condition is met, False otherwise.
-    """
-    NUMPOINTS = len(points)
-
-    # Condition not met if NUMPOINTS < 3 or invalid k_pts
-    if NUMPOINTS < 3 or k_pts < 1 or k_pts > NUMPOINTS - 2:
-        return False
-
-    for i in range(NUMPOINTS - k_pts - 1):
-        x1, y1 = points[i]
-        x2, y2 = points[i + k_pts + 1]  # Separated by k_pts indexing
-        euclidean_dist = np.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
-        if euclidean_dist > length_1:
-            return True
-    return False
-
-
 def lic_2(points: list[tuple[float, float]], epsilon: float) -> bool:
     """
     There exists at least one set of three consecutive data points which form an angle such that:
@@ -148,5 +120,32 @@ def lic_5(points: list[tuple[float, float]]) -> bool:
     """
     for (x_i, _), (x_j, _) in zip(points, points[1:]):
         if x_j - x_i < 0:
+            return True
+    return False
+
+def lic_7(points: list[tuple[float, float]], k_pts: int, length_1: float) -> bool:
+    """
+    Determines if there exists at least one set of two data points separated by exactly
+    k_pts consecutive intervening points that are a euclidean_dist greater than length_1 apart.
+
+    Parameters:
+        points (list[tuple[float, float]]): A list of 2D points [(x1, y1), (x2, y2), ...].
+        k_pts (int): Number of consecutive intervening points between the two points.
+        length_1 (float): Threshold euclidean_dist.
+
+    Returns:
+        bool: True if the condition is met, False otherwise.
+    """
+    NUMPOINTS = len(points)
+
+    # Condition not met if NUMPOINTS < 3 or invalid k_pts
+    if NUMPOINTS < 3 or k_pts < 1 or k_pts > NUMPOINTS - 2:
+        return False
+
+    for i in range(NUMPOINTS - k_pts - 1):
+        x1, y1 = points[i]
+        x2, y2 = points[i + k_pts + 1]  # Separated by k_pts indexing
+        euclidean_dist = np.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+        if euclidean_dist > length_1:
             return True
     return False
