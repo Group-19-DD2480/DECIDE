@@ -81,6 +81,27 @@ def test_lic_2() -> None:
     points = [(1, 0), (0, 0), (0, 1)]
     assert not lic_2(points, math.pi / 2)
 
+def test_lic_3() -> None:
+    '''
+    There exists at least one set of three consecutive data points that
+    are the vertices of a triangle with area greater than AREA1.
+    (0 <= AREA1)
+    '''
+
+    # Invalid area
+    area = -1.0
+    points = [(0, 0), (0, 1), (1, 2)]
+    assert not lic_3(points, area)
+
+    # Traingle is larger than area
+    area = 1.0
+    points = [(0, 0), (3, 0), (0, 3)]
+    assert lic_3(points, area)
+
+    # Exact area
+    area = 1.0
+    points = [(0, 0), (2, 0), (0, 1)]
+    assert not lic_3(points, area)
 
 def test_lic_5() -> None:
     """
