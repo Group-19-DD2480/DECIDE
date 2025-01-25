@@ -37,34 +37,6 @@ def lic_1(points: list[tuple[float, float]], radius: float) -> bool:
     return False
 
 
-def lic_7(points: list[tuple[float, float]], k_pts: int, length_1: float) -> bool:
-    """
-    Determines if there exists at least one set of two data points separated by exactly
-    k_pts consecutive intervening points that are a euclidean_dist greater than length_1 apart.
-
-    Parameters:
-        points (list[tuple[float, float]]): A list of 2D points [(x1, y1), (x2, y2), ...].
-        k_pts (int): Number of consecutive intervening points between the two points.
-        length_1 (float): Threshold euclidean_dist.
-
-    Returns:
-        bool: True if the condition is met, False otherwise.
-    """
-    NUMPOINTS = len(points)
-
-    # Condition not met if NUMPOINTS < 3 or invalid k_pts
-    if NUMPOINTS < 3 or k_pts < 1 or k_pts > NUMPOINTS - 2:
-        return False
-
-    for i in range(NUMPOINTS - k_pts - 1):
-        x1, y1 = points[i]
-        x2, y2 = points[i + k_pts + 1]  # Separated by k_pts indexing
-        euclidean_dist = np.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
-        if euclidean_dist > length_1:
-            return True
-    return False
-
-
 def lic_2(points: list[tuple[float, float]], epsilon: float) -> bool:
     """
     There exists at least one set of three consecutive data points which form an angle such that:
@@ -184,3 +156,72 @@ def lic_5(points: list[tuple[float, float]]) -> bool:
         if x_j - x_i < 0:
             return True
     return False
+
+def lic_7(points: list[tuple[float, float]], k_pts: int, length_1: float) -> bool:
+    """
+    Determines if there exists at least one set of two data points separated by exactly
+    k_pts consecutive intervening points that are a euclidean_dist greater than length_1 apart.
+
+    Parameters:
+        points (list[tuple[float, float]]): A list of 2D points [(x1, y1), (x2, y2), ...].
+        k_pts (int): Number of consecutive intervening points between the two points.
+        length_1 (float): Threshold euclidean_dist.
+
+    Returns:
+        bool: True if the condition is met, False otherwise.
+    """
+    NUMPOINTS = len(points)
+
+    # Condition not met if NUMPOINTS < 3 or invalid k_pts
+    if NUMPOINTS < 3 or k_pts < 1 or k_pts > NUMPOINTS - 2:
+        return False
+
+    for i in range(NUMPOINTS - k_pts - 1):
+        x1, y1 = points[i]
+        x2, y2 = points[i + k_pts + 1]  # Separated by k_pts indexing
+        euclidean_dist = np.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+        if euclidean_dist > length_1:
+            return True
+    return False
+
+def lic_13(points: list[tuple[float, float]], radius1: float, radius2: float, a_pts: int, b_pts: int) -> bool:
+    '''
+    There exists at least one set of three data points, separated by exactly A PTS and B PTS
+    consecutive intervening points, respectively, that cannot be contained within or on a circle of
+    radius RADIUS1. In addition, there exists at least one set of three data points (which can be
+    the same or different from the three data points just mentioned) separated by exactly A PTS
+    and B PTS consecutive intervening points, respectively, that can be contained in or on a
+    circle of radius RADIUS2. Both parts must be true for the LIC to be true. The condition is
+    not met when NUMPOINTS < 5.
+    0 ≤ RADIUS2
+
+    '''
+    
+    # Tolerance for comparing exact radius match
+    REL_TOL = 1+1e-09
+
+    # Invalid parameters
+    if radius1 < 0 or radius2 < 0 or a_pts < 1 or b_pts <1 or len(points) < a_pts + b_pts + 3:
+        return False
+    
+    radius1_uncont = False
+    radius2_cont = False
+
+    for set in zip(points, points[1+a_pts:],points[2+a_pts+b_pts:]):
+        # Calculate sides of the triangle formed by the points
+        set = np.array(set)
+        a = np.linalg.norm(set[0] - set[1])
+        b = np.linalg.norm(set[0] - set[2])
+        c = np.linalg.norm(set[1] - set[2])
+
+        # Calculate the circumcircle radius
+        cc_radius = a * b * c / np.sqrt((a+b+c)*(b+c-a)*(a+c-b)*(a+b-c))
+
+        # Compare the circumricle radius to radius1 and radius2
+        if cc_radius  > radius1 * REL_TOL:
+            radius1_uncont = True
+        if cc_radius  <= radius2 * REL_TOL:
+            radius2_cont = True
+
+    # Return True only if both radii conditions are satisfied
+    return radius1_uncont and radius2_cont
