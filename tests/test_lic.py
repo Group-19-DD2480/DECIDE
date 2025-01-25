@@ -149,18 +149,21 @@ def test_lic_8() -> None:
 
     # Two sets, none containable
     points = [(-1,2), (0, 0), (0, 0), (0, 2), (0, 2), (1,2)]
+    radius = 1
     a_pts = 1
     b_pts = 1
     assert lic_8(points,radius,a_pts,b_pts)
 
     # Two overlapping sets, one uncontainable
     points = [(-1,2), (0, 0), (0, 0), (0, 2), (0, 2), (1,1)]
+    radius = 1
     a_pts = 1
     b_pts = 1
     assert lic_8(points,radius,a_pts,b_pts)
 
     # Two overlapping sets, both containable
     points = [(-1,1), (0, 0), (0, 0), (0, 2), (0, 2), (1,1)]
+    radius = 1
     a_pts = 1
     b_pts = 1
     assert not lic_8(points,radius,a_pts,b_pts)
