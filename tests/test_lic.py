@@ -83,14 +83,17 @@ def test_lic_2() -> None:
     is not satisfied by those three points.
     (0 <= EPSILON < PI)
     """
+    # Correct angles
     points = [(1, 0), (0, 0), (0, 1)]
     assert lic_2(points, 0)
     assert lic_2(points, 0.5)
 
+    # Multiple points
     points = [(0, 0), (2, 0), (0, 0), (0, 2)]
     assert lic_2(points, 0)
     assert lic_2(points, 0.5)
 
+    # Invalid angles
     points = [(0, 0), (1, 0), (0, 0)]
     assert not lic_2(points, 0)
     points = [(1, 0), (0, 0), (0, 1)]
@@ -117,6 +120,42 @@ def test_lic_3() -> None:
     area = 1.0
     points = [(0, 0), (2, 0), (0, 1)]
     assert not lic_3(points, area)
+
+def test_lic_4() -> None:
+    '''
+    There exists at least one set of Q_PTS consecutive data points that lie in more than QUADS
+    quadrants. Where there is ambiguity as to which quadrant contains a given point, priority
+    of decision will be by quadrant number, i.e., I, II, III, IV. For example, the data point (0,0)
+    is in quadrant I, the point (-1,0) is in quadrant II, the point (0,-1) is in quadrant III, the point
+    (0,1) is in quadrant I and the point (1,0) is in quadrant I.
+    (2 <= Q_PTS <= NUMPOINTS),(1 <= QUADS <= 3)
+
+    '''
+
+    # Sufficient points in multiple quadrants
+    points = [(1, 1), (-1, 1), (-1, -1), (1, -1)]
+    assert lic_4(points, q_pts=4, quads=2)
+
+    # All points in a single quadrant
+    points = [(1, 1), (2, 2), (3, 3), (4, 4)]
+    assert not lic_4(points, q_pts=3, quads=1)
+
+    # Exactly the required number of quadrants
+    points = [(1, 1), (-1, 1), (-1, -1)]
+    assert lic_4(points, q_pts=3, quads=2)
+
+    # Not enough consecutive points
+    points = [(1, 1), (-1, -1), (1, -1), (-1, 1)]
+    assert not lic_4(points, q_pts=5, quads=3)
+
+    # Q_PTS too small
+    points = [(1, 1), (2, 2)]
+    assert not lic_4(points, q_pts=1, quads=1)
+
+    # QUADS out of range
+    points = [(1, 1), (-1, 1), (-1, -1), (1, -1)]
+    assert not lic_4(points, q_pts=4, quads=4)
+
 
 def test_lic_5() -> None:
     """

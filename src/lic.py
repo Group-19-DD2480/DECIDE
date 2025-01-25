@@ -1,4 +1,3 @@
-
 import numpy as np
 import math
 
@@ -156,6 +155,51 @@ def lic_3(points: list[tuple[float, float]], area: float) -> bool:
             return True
 
     # No sets create a large enough triangle
+    return False
+
+def lic_4(points: list[tuple[float, float]], q_pts: int, quads: int) -> bool:
+    """
+    There exists at least one set of Q_PTS consecutive data points that lie in more than QUADS
+    quadrants. Where there is ambiguity as to which quadrant contains a given point, priority
+    of decision will be by quadrant number, i.e., I, II, III, IV. For example, the data point (0,0)
+    is in quadrant I, the point (-1,0) is in quadrant II, the point (0,-1) is in quadrant III, the point
+    (0,1) is in quadrant I and the point (1,0) is in quadrant I.
+    (2 <= Q_PTS <= NUMPOINTS),(1 <= QUADS <= 3)
+
+    Parameters:
+        points (list[tuple[float, float]]): List of 2D points [(x_1, y_1), (x_2, y_2), ...].
+        q_pts (int): Number of points to consider.
+        quads (int): Number of quadrants to consider.
+
+    Returns:
+        bool: True if the LIC 4 condition is met, False, otherwise.
+    """
+    if q_pts < 2 or q_pts > len(points) or quads < 1 or quads > 3:
+        return False
+    
+    def get_quadrant(point):
+        """Determine the quadrant of a given point."""
+        x, y = point
+        if x >= 0 and y >= 0:
+            return 1  # Quadrant I
+        elif x <= 0 and y >= 0:
+            return 2  # Quadrant II
+        elif x <= 0 and y <= 0:
+            return 3  # Quadrant III
+        elif x >= 0 and y <= 0:
+            return 4
+        else:
+            return None
+    
+    for i in range(len(points) - q_pts + 1):
+        quadrants = set()
+        for j in range(i, i + q_pts):
+            quadrant = get_quadrant(points[j])
+            if quadrant is not None:
+                quadrants.add(quadrant)
+            if len(quadrants) > quads:
+                return True
+            
     return False
 
 
