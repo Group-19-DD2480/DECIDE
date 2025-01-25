@@ -113,3 +113,14 @@ def lic_1(points: list[tuple[float, float]], radius: float) -> bool:
 
     # If all sets are containable
     return False
+
+def lic_8(points: list[tuple[float, float]], radius: float, a_pts: int, b_pts: int) -> bool:
+    '''
+     There exists at least one set of three data points separated by exactly A PTS and B PTS
+    consecutive intervening points, respectively, that cannot be contained within or on a circle of
+    radius RADIUS1. The condition is not met when NUMPOINTS < 5.
+    1 ≤ A PTS, 1 ≤ B PTS
+    A PTS+B PTS ≤ (NUMPOINTS−3)
+
+    '''
+    pass
