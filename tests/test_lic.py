@@ -314,21 +314,33 @@ def test_lic_8() -> None:
 
 def test_lic_9():
     """
-    There exists at least one set of three data points separated by exactly C PTS and D PTS
+    There exists at least one set of three data points separated by exactly C_PTS and D_PTS
     consecutive intervening points, respectively, that form an angle such that:
-
-    angle < (PI − EPSILON)
+    angle < (PI-EPSILON)
     or
-    angle > (PI + EPSILON)
-
+    angle > (PI+EPSILON)
     The second point of the set of three points is always the vertex of the angle. If either the first
     point or the last point (or both) coincide with the vertex, the angle is undefined and the LIC
     is not satisfied by those three points. When NUMPOINTS < 5, the condition is not met.
-
-    1 ≤ C PTS, 1 ≤ D PTS
-    C PTS + D PTS ≤ NUMPOINTS − 3
+    1 <= C_PTS, 1 <= D_PTS
+    C_PTS + D_PTS <= NUMPOINTS - 3
     """
 
+    # Basic valid case
+    points = [(0, 0), (1, 2), (2, 0), (3, 1), (0, 4)]
+    assert lic_9(points, 1, 1, 0.5)
+
+    # All points are collinear
+    points = [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0)]
+    assert not lic_9(points, 1, 1, 0.1)
+
+    # Insufficient points
+    points = [(0, 0), (1, 1), (2, 0), (3, 1), (4, 0)]
+    assert not lic_9(points[:4], 1, 1, 0.1)
+
+    # No valid angles
+    points = [(0, 0), (1, 1), (2, 0), (3, 1), (0, 4)]
+    assert not lic_9(points, 1, 1, math.pi)
 
 def test_lic_10():
     """
