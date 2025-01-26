@@ -224,7 +224,7 @@ def lic_5(points: list[tuple[float, float]]) -> bool:
     return False
 
 
-def lic_6():
+def lic_6(points: list[tuple[float, float]], n_pts: int, dist: float):
     """
     There exists at least one set of N PTS consecutive data points such that at least one of the
     points lies a distance greater than DIST from the line joining the first and last of these N PTS
@@ -232,7 +232,59 @@ def lic_6():
     to compare with DIST will be the distance from the coincident point to all other points of
     the N PTS consecutive points. The condition is not met when NUMPOINTS < 3.
     (3 ≤ N PTS ≤ NUMPOINTS), (0 ≤ DIST)
+
+    Parameters:
+        points (list[tuple[float, float]]): A list of 2D points [(x1, y1), (x2, y2), ...].
+        n_pts (int): Number of consecutive points.
+        dist (float): Minimum distance from line.
+    
+    Returns:
+        bool: True if there exists a set of n_pts points such that there exists
+            a point at a distance greater than list from the line connecting the first
+            and last point in the set, if the first and last point are equal then the distance
+            is from the coincident point instead. False otherwise.
     """
+    def distance_to_line(first: tuple[float, float], last: tuple[float, float], point: tuple[float, float]):
+        """
+        Calculated the distance of point to the line defined by first and last.
+        If first and last are equal then the distance is calculated from the coincident point instead.
+
+        Parameters:
+            first (tuple[float, float]): The first point that defines the line.
+            last (tuple[float, float]): The second point that defines the line.
+            point (tuple[float, float]): The point that the distance is calculated to.
+
+        Returns:
+            float: the distance from point to the line defined by first and last,
+                if first and last are equal the distance is calculated from the coincident point.
+        """
+        x1, y1 = first
+        x2, y2 = last
+        x, y = point
+
+        #If first and last are equal the distance is calculated from the coincident point.
+        if first == last:
+            return math.sqrt((x - x1)**2 + (y - y1)**2)
+        
+        #Line equation Ax + By + C = 0
+        A = y2 - y1
+        B = x1 - x2
+        C = x2 * y1 - x1 * y2
+
+        return abs(A * x + B * y + C) / math.sqrt(A**2 + B**2)
+
+
+    if len(points) < 3:
+        return False
+    
+    for i in range(len(points) - n_pts + 1):
+        subset = points[i:i + n_pts]
+        first, last = subset[0], subset[-1]
+        for point in subset:
+            if distance_to_line(first, last, point) > dist:
+                return True
+    
+    return False
 
 def lic_7(points: list[tuple[float, float]], k_pts: int, length_1: float) -> bool:
     """
