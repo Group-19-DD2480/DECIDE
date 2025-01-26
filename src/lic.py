@@ -123,6 +123,19 @@ def lic_2(points: list[tuple[float, float]], epsilon: float) -> bool:
             return True
     return False
 
+
+def area_of_triangle(set: np.ndarray):
+    p1 = set[0]
+    p2 = set[1]
+    p3 = set[2]
+    area_of_triangle = (1/2) * abs(
+                                   p1[0] * (p2[1] - p3[1]) +
+                                   p2[0] * (p3[1] - p1[1]) +
+                                   p3[0] * (p1[1] - p2[1])
+                                   )
+    return area_of_triangle
+
+
 def lic_3(points: list[tuple[float, float]], area: float) -> bool:
     '''
     There exists at least one set of three consecutive data points that
@@ -142,16 +155,7 @@ def lic_3(points: list[tuple[float, float]], area: float) -> bool:
         return False
 
     for set in zip(points, points[1:], points[2:]):
-        set = np.array(set)
-        p1 = set[0]
-        p2 = set[1]
-        p3 = set[2]
-        area_of_triangle = (1/2) * abs(
-                                       p1[0] * (p2[1] - p3[1]) +
-                                       p2[0] * (p3[1] - p1[1]) +
-                                       p3[0] * (p1[1] - p2[1])
-                                       )
-        if area_of_triangle > area:
+        if area_of_triangle(set) > area:
             return True
 
     # No sets create a large enough triangle
@@ -279,7 +283,42 @@ def lic_8(points: list[tuple[float, float]], radius: float, a_pts: int, b_pts: i
 
     # If all sets are containable
     return False
-  
+
+def lic_10(points: list[tuple[float, float]], e_pts: int, f_pts: int, area1) -> bool:
+    """
+    There exists at least one set of three data points separated by exactly E PTS and F PTS con-
+    secutive intervening points, respectively, that are the vertices of a triangle with area greater
+    than AREA1. The condition is not met when NUMPOINTS < 5.
+    1 ≤ E PTS, 1 ≤ F PTS
+    E PTS + F PTS ≤ NUMPOINTS − 3
+
+    Parameters:
+        points (list[tuple[float, float]]): A list of 2D points [(x1, y1), (x2, y2), ...].
+        e_pts: Number of consecutive points that separates the first and second point in the triangle
+        f_pts: Number of consecutive points that separates the second and third point in the triangle
+        area1: Area that the triangle should be strictly greater than
+
+    Returns:
+        bool: True if the area of a triangle of any three data points separated by e_pts and f_pts,
+              is strictly greater than the given area, false otherwise
+
+    """
+    if len(points) < 5:
+        return False
+
+    if 1 > e_pts or 1 > f_pts:
+        return False
+
+    if e_pts + f_pts > len(points) - 3:
+        return False
+
+    for set in zip(points, points[1+e_pts:], points[2+e_pts + f_pts:]):
+        if area_of_triangle(set) > area1:
+            return True
+
+    return False
+
+
 def lic_13(points: list[tuple[float, float]], radius1: float, radius2: float, a_pts: int, b_pts: int) -> bool:
     '''
     There exists at least one set of three data points, separated by exactly A PTS and B PTS
