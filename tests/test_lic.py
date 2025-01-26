@@ -312,7 +312,6 @@ def test_lic_8() -> None:
     b_pts = 1
     assert not lic_8(points,radius,a_pts,b_pts)
 
-
 def test_lic_9():
     """
     There exists at least one set of three data points separated by exactly C PTS and D PTS
@@ -340,6 +339,33 @@ def test_lic_10():
     1 ≤ E PTS, 1 ≤ F PTS
     E PTS + F PTS ≤ NUMPOINTS − 3
     """
+    # Invalid e_pts
+    points = [(0, 0), (1, 1), (2, 2), (3, 3), (4, 4)]
+    e_pts = 0
+    f_pts = 1
+    area = 1
+    assert not lic_10(points, e_pts, f_pts, area)
+
+    # Invalid f_pts
+    points = [(0, 0), (1, 1), (2, 2), (3, 3), (4, 4)]
+    e_pts = 1
+    f_pts = 0
+    area = 1
+    assert not lic_10(points, e_pts, f_pts, area)
+
+    # Valid area
+    points = [(0, 0), (0, 0), (0, 2), (1, 0), (4, 0), (0, 2)]
+    e_pts = 1
+    f_pts = 1
+    area = 1
+    assert  lic_10(points, e_pts, f_pts, area)
+
+    # Exact area
+    points = [(0, 0), (0, 0), (1, 0), (1, 0), (0, 2), (0, 2)]
+    e_pts = 1
+    f_pts = 1
+    area = 1
+    assert  not lic_10(points, e_pts, f_pts, area)
 
 
 def test_lic_11():
