@@ -301,7 +301,6 @@ def lic_10(points: list[tuple[float, float]], e_pts: int, f_pts: int, area1) -> 
     Returns:
         bool: True if the area of a triangle of any three data points separated by e_pts and f_pts,
               is strictly greater than the given area, false otherwise
-
     """
     if len(points) < 5:
         return False
