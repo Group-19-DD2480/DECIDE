@@ -377,6 +377,22 @@ def test_lic_11():
     1 ≤ G PTS ≤ NUMPOINTS − 2
     """
 
+    g_pts = 1
+    points = [(1, 0), (2, 3), (0, 1)]
+    assert lic_11(points, g_pts)
+
+    g_pts = 2
+    points = [(0, 1), (1, 2), (3, 4), (4, 5), (0, 6)]
+    assert lic_11(points, g_pts)
+
+    g_pts = 1
+    points = [(1, 2), (3, 4), (5, 6), (7, 8)]
+    assert not lic_11(points, g_pts)
+
+    #NUMPOINTS < 3
+    g_pts = 1
+    points = [(1, 2), (0, 2)]
+    assert not lic_11(points, g_pts)
 
 def test_lic_12():
     """
