@@ -30,6 +30,7 @@ def test_lic_0() -> None:
     length_1 = 2
     assert not lic_0(points, length_1)
 
+
 def test_lic_1() -> None:
     """
     There exists at least one set of three consecutive data points
@@ -72,6 +73,7 @@ def test_lic_1() -> None:
     radius = 1
     assert not lic_1(points, radius)
 
+
 def test_lic_2() -> None:
     """
     There exists at least one set of three consecutive data points which form an angle such that:
@@ -99,12 +101,13 @@ def test_lic_2() -> None:
     points = [(1, 0), (0, 0), (0, 1)]
     assert not lic_2(points, math.pi / 2)
 
+
 def test_lic_3() -> None:
-    '''
+    """
     There exists at least one set of three consecutive data points that
     are the vertices of a triangle with area greater than AREA1.
     (0 <= AREA1)
-    '''
+    """
 
     # Invalid area
     area = -1.0
@@ -121,8 +124,9 @@ def test_lic_3() -> None:
     points = [(0, 0), (2, 0), (0, 1)]
     assert not lic_3(points, area)
 
+
 def test_lic_4() -> None:
-    '''
+    """
     There exists at least one set of Q_PTS consecutive data points that lie in more than QUADS
     quadrants. Where there is ambiguity as to which quadrant contains a given point, priority
     of decision will be by quadrant number, i.e., I, II, III, IV. For example, the data point (0,0)
@@ -130,7 +134,7 @@ def test_lic_4() -> None:
     (0,1) is in quadrant I and the point (1,0) is in quadrant I.
     (2 <= Q_PTS <= NUMPOINTS),(1 <= QUADS <= 3)
 
-    '''
+    """
 
     # Sufficient points in multiple quadrants
     points = [(1, 1), (-1, 1), (-1, -1), (1, -1)]
@@ -268,91 +272,93 @@ def test_lic_7():
     length_1 = np.sqrt(8)  # sqrt((2-0)^2 + (2-0)^2) = sqrt(8)
     assert lic_7(points, k_pts, length_1) == False
 
+
 def test_lic_8() -> None:
-    '''
+    """
     There exists at least one set of three data points separated by exactly A PTS and B PTS
     consecutive intervening points, respectively, that cannot be contained within or on a circle of
     radius RADIUS1. The condition is not met when NUMPOINTS < 5.
     1 ≤ A PTS, 1 ≤ B PTS
     A PTS+B PTS ≤ (NUMPOINTS−3)
-    '''
+    """
 
     # Invalid radius
-    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    points = [(0, 0), (-1, -1), (0, 2), (-2, -2), (1, 1)]
     radius = -1
     a_pts = 1
     b_pts = 1
-    assert not lic_8(points,radius,a_pts,b_pts)
+    assert not lic_8(points, radius, a_pts, b_pts)
 
     # Invalid a_pts
-    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    points = [(0, 0), (-1, -1), (0, 2), (-2, -2), (1, 1)]
     radius = 1
     a_pts = -1
     b_pts = 1
-    assert not lic_8(points,radius,a_pts,b_pts)
+    assert not lic_8(points, radius, a_pts, b_pts)
 
     # Invalid b_pts
-    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    points = [(0, 0), (-1, -1), (0, 2), (-2, -2), (1, 1)]
     radius = 1
     a_pts = 1
     b_pts = -1
-    assert not lic_8(points,radius,a_pts,b_pts)
+    assert not lic_8(points, radius, a_pts, b_pts)
 
     # Invalid numpoints
-    points = [(0, 0), (-1,-1), (0, 2), (1,1)]
+    points = [(0, 0), (-1, -1), (0, 2), (1, 1)]
     radius = 1
     a_pts = 1
     b_pts = 1
-    assert not lic_8(points,radius,a_pts,b_pts)
+    assert not lic_8(points, radius, a_pts, b_pts)
 
     # Invalid a_pts, b_pts and numpoints combination
-    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    points = [(0, 0), (-1, -1), (0, 2), (-2, -2), (1, 1)]
     radius = 1
     a_pts = 2
     b_pts = 1
-    assert not lic_8(points,radius,a_pts,b_pts)
+    assert not lic_8(points, radius, a_pts, b_pts)
 
     # Too small radius
-    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    points = [(0, 0), (-1, -1), (0, 2), (-2, -2), (1, 1)]
     radius = 0.5
     a_pts = 1
     b_pts = 1
-    assert lic_8(points,radius,a_pts,b_pts)
+    assert lic_8(points, radius, a_pts, b_pts)
 
     # Exact radius
-    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    points = [(0, 0), (-1, -1), (0, 2), (-2, -2), (1, 1)]
     radius = 1
     a_pts = 1
     b_pts = 1
-    assert not lic_8(points,radius,a_pts,b_pts)
+    assert not lic_8(points, radius, a_pts, b_pts)
 
     # Larger radius
-    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    points = [(0, 0), (-1, -1), (0, 2), (-2, -2), (1, 1)]
     radius = 2
     a_pts = 1
     b_pts = 1
-    assert not lic_8(points,radius,a_pts,b_pts)
+    assert not lic_8(points, radius, a_pts, b_pts)
 
     # Two sets, none containable
-    points = [(-1,2), (0, 0), (0, 0), (0, 2), (0, 2), (1,2)]
+    points = [(-1, 2), (0, 0), (0, 0), (0, 2), (0, 2), (1, 2)]
     radius = 1
     a_pts = 1
     b_pts = 1
-    assert lic_8(points,radius,a_pts,b_pts)
+    assert lic_8(points, radius, a_pts, b_pts)
 
     # Two overlapping sets, one uncontainable
-    points = [(-1,2), (0, 0), (0, 0), (0, 2), (0, 2), (1,1)]
+    points = [(-1, 2), (0, 0), (0, 0), (0, 2), (0, 2), (1, 1)]
     radius = 1
     a_pts = 1
     b_pts = 1
-    assert lic_8(points,radius,a_pts,b_pts)
+    assert lic_8(points, radius, a_pts, b_pts)
 
     # Two overlapping sets, both containable
-    points = [(-1,1), (0, 0), (0, 0), (0, 2), (0, 2), (1,1)]
+    points = [(-1, 1), (0, 0), (0, 0), (0, 2), (0, 2), (1, 1)]
     radius = 1
     a_pts = 1
     b_pts = 1
-    assert not lic_8(points,radius,a_pts,b_pts)
+    assert not lic_8(points, radius, a_pts, b_pts)
+
 
 def test_lic_9():
     """
@@ -384,6 +390,7 @@ def test_lic_9():
     points = [(0, 0), (1, 1), (2, 0), (3, 1), (0, 4)]
     assert not lic_9(points, 1, 1, math.pi)
 
+
 def test_lic_10():
     """
     There exists at least one set of three data points separated by exactly E PTS and F PTS con-
@@ -412,14 +419,14 @@ def test_lic_10():
     e_pts = 1
     f_pts = 1
     area = 1
-    assert  lic_10(points, e_pts, f_pts, area)
+    assert lic_10(points, e_pts, f_pts, area)
 
     # Exact area
     points = [(0, 0), (0, 0), (1, 0), (1, 0), (0, 2), (0, 2)]
     e_pts = 1
     f_pts = 1
     area = 1
-    assert  not lic_10(points, e_pts, f_pts, area)
+    assert not lic_10(points, e_pts, f_pts, area)
 
 
 def test_lic_11():
@@ -443,10 +450,11 @@ def test_lic_11():
     points = [(1, 2), (3, 4), (5, 6), (7, 8)]
     assert not lic_11(points, g_pts)
 
-    #NUMPOINTS < 3
+    # NUMPOINTS < 3
     g_pts = 1
     points = [(1, 2), (0, 2)]
     assert not lic_11(points, g_pts)
+
 
 def test_lic_12():
     """
@@ -460,151 +468,200 @@ def test_lic_12():
     0 ≤ LENGTH2
     """
 
-def test_lic_13() -> None:
+    # Both conditions satisfied
+    points = [(0, 0), (1, 1), (6, 6), (10, 10)]
+    k_pts = 1
+    length_1 = 5
+    length_2 = 10
+    assert lic_12(points, k_pts, length_1, length_2)
 
-    '''
+    # Condition 1 satisfied, Condition 2 not satisfied
+    points = [(0, 0), (1, 1), (6, 6), (10, 10)]
+    k_pts = 1
+    length_1 = 5
+    length_2 = 1
+    assert not lic_12(points, k_pts, length_1, length_2)
+
+    # Condition 2 satisfied, Condition 1 not satisfied
+    points = [(0, 0), (1, 1), (5, 5), (3, 3)]
+    k_pts = 1
+    length_1 = 10
+    length_2 = 3
+    assert not lic_12(points, k_pts, length_1, length_2)
+
+    # NUMPOINTS < 3
+    points = [(0, 0), (1, 1)]
+    k_pts = 1
+    length_1 = 5
+    length_2 = 2
+    assert not lic_12(points, k_pts, length_1, length_2)
+
+    # Invalid k_pts (k_pts > NUMPOINTS - 2)
+    points = [(0, 0), (2, 2), (4, 4), (6, 6)]
+    k_pts = 3
+    length_1 = 1
+    length_2 = 2
+    assert not lic_12(points, k_pts, length_1, length_2)
+
+    # Invalid LENGTH2 (LENGTH2 < 0)
+    points = [(0, 0), (1, 1), (2, 2), (3, 3)]
+    k_pts = 1
+    length_1 = 5
+    length_2 = -1
+    assert not lic_12(points, k_pts, length_1, length_2)
+
+    # Distance exactly equal to LENGTH1 or LENGTH2 (not satisfied)
+    points = [(0, 0), (1, 1), (2, 2)]
+    k_pts = 1
+    length_1 = math.sqrt(8)
+    length_2 = math.sqrt(8)
+    assert not lic_12(points, k_pts, length_1, length_2)
+
+
+def test_lic_13() -> None:
+    """
     There exists at least one set of three data points separated by exactly A PTS and B PTS
     consecutive intervening points, respectively, that cannot be contained within or on a circle of
     radius RADIUS1. The condition is not met when NUMPOINTS < 5.
     1 ≤ A PTS, 1 ≤ B PTS
     A PTS+B PTS ≤ (NUMPOINTS−3)
-    '''
+    """
 
     # Invalid radius1
-    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    points = [(0, 0), (-1, -1), (0, 2), (-2, -2), (1, 1)]
     radius1 = -1
     radius2 = 1
     a_pts = 1
     b_pts = 1
-    assert not lic_13(points,radius1,radius2,a_pts,b_pts)
+    assert not lic_13(points, radius1, radius2, a_pts, b_pts)
 
     # Invalid radius2
-    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    points = [(0, 0), (-1, -1), (0, 2), (-2, -2), (1, 1)]
     radius1 = 1
     radius2 = -1
     a_pts = 1
     b_pts = 1
-    assert not lic_13(points,radius1,radius2,a_pts,b_pts)
+    assert not lic_13(points, radius1, radius2, a_pts, b_pts)
 
     # Invalid a_pts
-    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    points = [(0, 0), (-1, -1), (0, 2), (-2, -2), (1, 1)]
     radius1 = 1
     radius2 = 1
     a_pts = -1
     b_pts = 1
-    assert not lic_13(points,radius1,radius2,a_pts,b_pts)
+    assert not lic_13(points, radius1, radius2, a_pts, b_pts)
 
     # Invalid b_pts
-    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    points = [(0, 0), (-1, -1), (0, 2), (-2, -2), (1, 1)]
     radius1 = 1
     radius2 = 1
     a_pts = 1
     b_pts = -1
-    assert not lic_13(points,radius1,radius2,a_pts,b_pts)
+    assert not lic_13(points, radius1, radius2, a_pts, b_pts)
 
     # Invalid numpoints
-    points = [(0, 0), (-1,-1), (0, 2), (1,1)]
+    points = [(0, 0), (-1, -1), (0, 2), (1, 1)]
     radius1 = 1
     radius2 = 1
     a_pts = 1
     b_pts = 1
-    assert not lic_13(points,radius1,radius2,a_pts,b_pts)
+    assert not lic_13(points, radius1, radius2, a_pts, b_pts)
 
     # Invalid a_pts, b_pts and numpoints combination
-    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    points = [(0, 0), (-1, -1), (0, 2), (-2, -2), (1, 1)]
     radius1 = 1
     radius2 = 1
     a_pts = 2
     b_pts = 1
-    assert not lic_13(points,radius1,radius2,a_pts,b_pts)
-    
+    assert not lic_13(points, radius1, radius2, a_pts, b_pts)
+
     # Smaller radius1, smaller radius 2
-    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    points = [(0, 0), (-1, -1), (0, 2), (-2, -2), (1, 1)]
     radius1 = 0.5
     radius2 = 0.5
     a_pts = 1
     b_pts = 1
-    assert not lic_13(points,radius1,radius2,a_pts,b_pts)
+    assert not lic_13(points, radius1, radius2, a_pts, b_pts)
 
     # Smaller radius1, exact radius 2
-    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    points = [(0, 0), (-1, -1), (0, 2), (-2, -2), (1, 1)]
     radius1 = 0.5
     radius2 = 1
     a_pts = 1
     b_pts = 1
-    assert lic_13(points,radius1,radius2,a_pts,b_pts)
+    assert lic_13(points, radius1, radius2, a_pts, b_pts)
 
     # Smaller radius1, larger radius 2
-    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    points = [(0, 0), (-1, -1), (0, 2), (-2, -2), (1, 1)]
     radius1 = 0.5
     radius2 = 2
     a_pts = 1
     b_pts = 1
-    assert lic_13(points,radius1,radius2,a_pts,b_pts)
-    
+    assert lic_13(points, radius1, radius2, a_pts, b_pts)
+
     # Exact radius1, larger radius 2
-    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    points = [(0, 0), (-1, -1), (0, 2), (-2, -2), (1, 1)]
     radius1 = 1
     radius2 = 2
     a_pts = 1
     b_pts = 1
-    assert not lic_13(points,radius1,radius2,a_pts,b_pts)
-    
+    assert not lic_13(points, radius1, radius2, a_pts, b_pts)
+
     # Larger radius1, larger radius 2
-    points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    points = [(0, 0), (-1, -1), (0, 2), (-2, -2), (1, 1)]
     radius1 = 2
     radius2 = 2
     a_pts = 1
     b_pts = 1
-    assert not lic_13(points,radius1,radius2,a_pts,b_pts)
+    assert not lic_13(points, radius1, radius2, a_pts, b_pts)
 
     # Two sets, none containable by either radius
-    points = [(-1,2), (0, 0), (0, 0), (0, 2), (0, 2), (1,2)]
+    points = [(-1, 2), (0, 0), (0, 0), (0, 2), (0, 2), (1, 2)]
     radius1 = 1
     radius2 = 1
     a_pts = 1
     b_pts = 1
-    assert not lic_13(points,radius1,radius2,a_pts,b_pts)
+    assert not lic_13(points, radius1, radius2, a_pts, b_pts)
 
     # Two sets, both containable by both radius
-    points = [(-1,1), (0, 0), (0, 0), (0, 2), (0, 2), (1,1)]
+    points = [(-1, 1), (0, 0), (0, 0), (0, 2), (0, 2), (1, 1)]
     radius1 = 1
     radius2 = 1
     a_pts = 1
     b_pts = 1
-    assert not lic_13(points,radius1,radius2,a_pts,b_pts)
+    assert not lic_13(points, radius1, radius2, a_pts, b_pts)
 
     # Two  sets with same radius where radius1 < radius <= radius2
-    points = [(-1,1), (0, 0), (0, 0), (0, 2), (0, 2), (1,1)]
+    points = [(-1, 1), (0, 0), (0, 0), (0, 2), (0, 2), (1, 1)]
     radius1 = 0.5
     radius2 = 1
     a_pts = 1
     b_pts = 1
-    assert lic_13(points,radius1,radius2,a_pts,b_pts)
+    assert lic_13(points, radius1, radius2, a_pts, b_pts)
 
     # Two  sets with diffrent radii wehre set 1 radius <= radius1 < set 2 radius <= radius2
-    points = [(-1,1), (0, 0), (0, 0), (0, 4), (0, 2), (2,2)]
+    points = [(-1, 1), (0, 0), (0, 0), (0, 4), (0, 2), (2, 2)]
     radius1 = 1
     radius2 = 2
     a_pts = 1
     b_pts = 1
-    assert lic_13(points,radius1,radius2,a_pts,b_pts)
+    assert lic_13(points, radius1, radius2, a_pts, b_pts)
 
     # Two  sets with diffrent radii wehre set 1 radius <= radius1 <= radius2 < set 2 radius
-    points = [(-1,1), (0, 0), (0, 0), (0, 4), (0, 2), (2,2)]
+    points = [(-1, 1), (0, 0), (0, 0), (0, 4), (0, 2), (2, 2)]
     radius1 = 1
     radius2 = 1
     a_pts = 1
     b_pts = 1
-    assert lic_13(points,radius1,radius2,a_pts,b_pts)
+    assert lic_13(points, radius1, radius2, a_pts, b_pts)
 
     # Two  sets with diffrent radii wehre  radius1 < set 1 radius <= radius2 < set 2 radius
-    points = [(-1,1), (0, 0), (0, 0), (0, 4), (0, 2), (2,2)]
+    points = [(-1, 1), (0, 0), (0, 0), (0, 4), (0, 2), (2, 2)]
     radius1 = 0.5
     radius2 = 1
     a_pts = 1
     b_pts = 1
-    assert lic_13(points,radius1,radius2,a_pts,b_pts)
+    assert lic_13(points, radius1, radius2, a_pts, b_pts)
 
 
 def test_lic_14():

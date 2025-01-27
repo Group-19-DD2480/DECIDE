@@ -21,6 +21,7 @@ def lic_0(points: list[tuple[float, float]], length_1: float) -> bool:
             return True
     return False
 
+
 def lic_1(points: list[tuple[float, float]], radius: float) -> bool:
     """
     There exists at least one set of three consecutive data points
@@ -54,6 +55,7 @@ def lic_1(points: list[tuple[float, float]], radius: float) -> bool:
     # If all sets are containable
     return False
 
+
 def calculate_angle(p1, p2, p3):
     """
     Calculate the angle formed by three points p1, p2 (vertex), and p3.
@@ -84,6 +86,7 @@ def calculate_angle(p1, p2, p3):
     cos_theta = max(min(cos_theta, 1), -1)
 
     return math.acos(cos_theta)
+
 
 def lic_2(points: list[tuple[float, float]], epsilon: float) -> bool:
     """
@@ -127,16 +130,14 @@ def area_of_triangle(set: np.ndarray):
     p1 = set[0]
     p2 = set[1]
     p3 = set[2]
-    area_of_triangle = (1/2) * abs(
-                                   p1[0] * (p2[1] - p3[1]) +
-                                   p2[0] * (p3[1] - p1[1]) +
-                                   p3[0] * (p1[1] - p2[1])
-                                   )
+    area_of_triangle = (1 / 2) * abs(
+        p1[0] * (p2[1] - p3[1]) + p2[0] * (p3[1] - p1[1]) + p3[0] * (p1[1] - p2[1])
+    )
     return area_of_triangle
 
 
 def lic_3(points: list[tuple[float, float]], area: float) -> bool:
-    '''
+    """
     There exists at least one set of three consecutive data points that
     are the vertices of a triangle with area greater than AREA1.
     (0 <= AREA1)
@@ -149,7 +150,7 @@ def lic_3(points: list[tuple[float, float]], area: float) -> bool:
         bool: True if the area of a triangle of any three consecutive
               data points is strictly greater than the given area,
               false otherwise
-    '''
+    """
     if area < 0:
         return False
 
@@ -159,6 +160,7 @@ def lic_3(points: list[tuple[float, float]], area: float) -> bool:
 
     # No sets create a large enough triangle
     return False
+
 
 def lic_4(points: list[tuple[float, float]], q_pts: int, quads: int) -> bool:
     """
@@ -179,7 +181,7 @@ def lic_4(points: list[tuple[float, float]], q_pts: int, quads: int) -> bool:
     """
     if q_pts < 2 or q_pts > len(points) or quads < 1 or quads > 3:
         return False
-    
+
     def get_quadrant(point):
         """Determine the quadrant of a given point."""
         x, y = point
@@ -193,7 +195,7 @@ def lic_4(points: list[tuple[float, float]], q_pts: int, quads: int) -> bool:
             return 4
         else:
             return None
-    
+
     for i in range(len(points) - q_pts + 1):
         quadrants = set()
         for j in range(i, i + q_pts):
@@ -202,7 +204,7 @@ def lic_4(points: list[tuple[float, float]], q_pts: int, quads: int) -> bool:
                 quadrants.add(quadrant)
             if len(quadrants) > quads:
                 return True
-            
+
     return False
 
 
@@ -237,14 +239,19 @@ def lic_6(points: list[tuple[float, float]], n_pts: int, dist: float):
         points (list[tuple[float, float]]): A list of 2D points [(x1, y1), (x2, y2), ...].
         n_pts (int): Number of consecutive points.
         dist (float): Minimum distance from line.
-    
+
     Returns:
         bool: True if there exists a set of n_pts points such that there exists
             a point at a distance greater than list from the line connecting the first
             and last point in the set, if the first and last point are equal then the distance
             is from the coincident point instead. False otherwise.
     """
-    def distance_to_line(first: tuple[float, float], last: tuple[float, float], point: tuple[float, float]):
+
+    def distance_to_line(
+        first: tuple[float, float],
+        last: tuple[float, float],
+        point: tuple[float, float],
+    ):
         """
         Calculated the distance of point to the line defined by first and last.
         If first and last are equal then the distance is calculated from the coincident point instead.
@@ -262,29 +269,29 @@ def lic_6(points: list[tuple[float, float]], n_pts: int, dist: float):
         x2, y2 = last
         x, y = point
 
-        #If first and last are equal the distance is calculated from the coincident point.
+        # If first and last are equal the distance is calculated from the coincident point.
         if first == last:
-            return math.sqrt((x - x1)**2 + (y - y1)**2)
-        
-        #Line equation Ax + By + C = 0
+            return math.sqrt((x - x1) ** 2 + (y - y1) ** 2)
+
+        # Line equation Ax + By + C = 0
         A = y2 - y1
         B = x1 - x2
         C = x2 * y1 - x1 * y2
 
         return abs(A * x + B * y + C) / math.sqrt(A**2 + B**2)
 
-
     if len(points) < 3:
         return False
-    
+
     for i in range(len(points) - n_pts + 1):
-        subset = points[i:i + n_pts]
+        subset = points[i : i + n_pts]
         first, last = subset[0], subset[-1]
         for point in subset:
             if distance_to_line(first, last, point) > dist:
                 return True
-    
+
     return False
+
 
 def lic_7(points: list[tuple[float, float]], k_pts: int, length_1: float) -> bool:
     """
@@ -313,24 +320,27 @@ def lic_7(points: list[tuple[float, float]], k_pts: int, length_1: float) -> boo
             return True
     return False
 
-def lic_8(points: list[tuple[float, float]], radius: float, a_pts: int, b_pts: int) -> bool:
-    '''
+
+def lic_8(
+    points: list[tuple[float, float]], radius: float, a_pts: int, b_pts: int
+) -> bool:
+    """
      There exists at least one set of three data points separated by exactly A PTS and B PTS
     consecutive intervening points, respectively, that cannot be contained within or on a circle of
     radius RADIUS1. The condition is not met when NUMPOINTS < 5.
     1 ≤ A PTS, 1 ≤ B PTS
     A PTS+B PTS ≤ (NUMPOINTS−3)
 
-    '''
-    
+    """
+
     # Tolerance for comparing exact radius match
-    REL_TOL = 1+1e-09
+    REL_TOL = 1 + 1e-09
 
     # Invalid parameters
-    if radius < 0 or a_pts < 1 or b_pts <1 or len(points) < a_pts + b_pts + 3:
+    if radius < 0 or a_pts < 1 or b_pts < 1 or len(points) < a_pts + b_pts + 3:
         return False
 
-    for set in zip(points, points[1+a_pts:],points[2+a_pts+b_pts:]):
+    for set in zip(points, points[1 + a_pts :], points[2 + a_pts + b_pts :]):
         # Calculate sides of the triangle formed by the points
         set = np.array(set)
         a = np.linalg.norm(set[0] - set[1])
@@ -338,15 +348,20 @@ def lic_8(points: list[tuple[float, float]], radius: float, a_pts: int, b_pts: i
         c = np.linalg.norm(set[1] - set[2])
 
         # Calculate the circumcircle radius
-        cc_radius = a * b * c / np.sqrt((a+b+c)*(b+c-a)*(a+c-b)*(a+b-c))
+        cc_radius = (
+            a * b * c / np.sqrt((a + b + c) * (b + c - a) * (a + c - b) * (a + b - c))
+        )
         # Return True if the circumcircle radius is larger and thus uncontainable by radius
-        if cc_radius  > radius * REL_TOL:
+        if cc_radius > radius * REL_TOL:
             return True
 
     # If all sets are containable
     return False
 
-def lic_9(points: list[tuple[float, float]], c_pts: int, d_pts: int, epsilon: float) -> bool:
+
+def lic_9(
+    points: list[tuple[float, float]], c_pts: int, d_pts: int, epsilon: float
+) -> bool:
     """
     There exists at least one set of three data points separated by exactly C_PTS and D_PTS
     consecutive intervening points, respectively, that form an angle such that:
@@ -380,10 +395,13 @@ def lic_9(points: list[tuple[float, float]], c_pts: int, d_pts: int, epsilon: fl
             continue
 
         angle = calculate_angle(p1, p2, p3)
-        if angle is not None and (angle < math.pi - epsilon or angle > math.pi + epsilon):
+        if angle is not None and (
+            angle < math.pi - epsilon or angle > math.pi + epsilon
+        ):
             return True
 
     return False
+
 
 def lic_10(points: list[tuple[float, float]], e_pts: int, f_pts: int, area1) -> bool:
     """
@@ -413,11 +431,12 @@ def lic_10(points: list[tuple[float, float]], e_pts: int, f_pts: int, area1) -> 
     if e_pts + f_pts > len(points) - 3:
         return False
 
-    for set in zip(points, points[1+e_pts:], points[2+e_pts + f_pts:]):
+    for set in zip(points, points[1 + e_pts :], points[2 + e_pts + f_pts :]):
         if area_of_triangle(set) > area1:
             return True
 
     return False
+
 
 def lic_11(points: list[tuple[float, float]], g_pts: int):
     """
@@ -436,25 +455,69 @@ def lic_11(points: list[tuple[float, float]], g_pts: int):
     """
     if len(points) < 3:
         return False
-    for (x_i, _), (x_j, _) in zip(points, points[1 + g_pts:]):
+    for (x_i, _), (x_j, _) in zip(points, points[1 + g_pts :]):
         if x_j - x_i < 0:
             return True
     return False
 
-def lic_12():
-    """
-    There exists at least one set of two data points, separated by exactly K PTS consecutive
-    intervening points, which are a distance greater than the length, LENGTH1, apart. In addi-
-    tion, there exists at least one set of two data points (which can be the same or different from
-    the two data points just mentioned), separated by exactly K PTS consecutive intervening
-    points, that are a distance less than the length, LENGTH2, apart. Both parts must be true
-    for the LIC to be true. The condition is not met when NUMPOINTS < 3.
 
-    0 ≤ LENGTH2
+def lic_12(
+    points: list[tuple[float, float]], k_pts: int, length_1: float, length_2: float
+) -> bool:
     """
+    Determines if there exists at least one set of two data points separated by exactly K_PTS
+    consecutive intervening points, which satisfy the following conditions:
+    1. The distance between the two points is greater than LENGTH1.
+    2. The distance between the two points is less than LENGTH2.
+    Both conditions must be true for the LIC to return True.
 
-def lic_13(points: list[tuple[float, float]], radius1: float, radius2: float, a_pts: int, b_pts: int) -> bool:
-    '''
+    Parameters:
+        points (List[Tuple[float, float]]): A list of 2D points [(x1, y1), (x2, y2), ...].
+        k_pts (int): Number of consecutive intervening points between the two points.
+        length_1 (float): Distance threshold for the first condition (greater than).
+        length_2 (float): Distance threshold for the second condition (less than).
+
+    Returns:
+        bool: True if both conditions are satisfied, False otherwise.
+    """
+    NUMPOINTS = len(points)
+
+    if NUMPOINTS < 3 or k_pts < 1 or k_pts > NUMPOINTS - 2 or length_2 < 0:
+        return False
+
+    condition_1 = False
+    condition_2 = False
+
+    # Check points separated by exactly k_pts intervening points
+    for i in range(NUMPOINTS - k_pts - 1):
+        x1, y1 = points[i]
+        x2, y2 = points[i + k_pts + 1]
+        distance = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+
+        # Check condition 1 (distance > LENGTH1)
+        if distance > length_1:
+            condition_1 = True
+
+        # Check condition 2 (distance < LENGTH2)
+        if distance < length_2:
+            condition_2 = True
+
+        # If both conditions are satisfied, return True
+        if condition_1 and condition_2:
+            return True
+
+    # If the loop ends without returning True, return False
+    return False
+
+
+def lic_13(
+    points: list[tuple[float, float]],
+    radius1: float,
+    radius2: float,
+    a_pts: int,
+    b_pts: int,
+) -> bool:
+    """
     There exists at least one set of three data points, separated by exactly A PTS and B PTS
     consecutive intervening points, respectively, that cannot be contained within or on a circle of
     radius RADIUS1. In addition, there exists at least one set of three data points (which can be
@@ -464,19 +527,25 @@ def lic_13(points: list[tuple[float, float]], radius1: float, radius2: float, a_
     not met when NUMPOINTS < 5.
     0 ≤ RADIUS2
 
-    '''
-    
+    """
+
     # Tolerance for comparing exact radius match
-    REL_TOL = 1+1e-09
+    REL_TOL = 1 + 1e-09
 
     # Invalid parameters
-    if radius1 < 0 or radius2 < 0 or a_pts < 1 or b_pts <1 or len(points) < a_pts + b_pts + 3:
+    if (
+        radius1 < 0
+        or radius2 < 0
+        or a_pts < 1
+        or b_pts < 1
+        or len(points) < a_pts + b_pts + 3
+    ):
         return False
-    
+
     radius1_uncont = False
     radius2_cont = False
 
-    for set in zip(points, points[1+a_pts:],points[2+a_pts+b_pts:]):
+    for set in zip(points, points[1 + a_pts :], points[2 + a_pts + b_pts :]):
         # Calculate sides of the triangle formed by the points
         set = np.array(set)
         a = np.linalg.norm(set[0] - set[1])
@@ -484,15 +553,18 @@ def lic_13(points: list[tuple[float, float]], radius1: float, radius2: float, a_
         c = np.linalg.norm(set[1] - set[2])
 
         # Calculate the circumcircle radius
-        cc_radius = a * b * c / np.sqrt((a+b+c)*(b+c-a)*(a+c-b)*(a+b-c))
+        cc_radius = (
+            a * b * c / np.sqrt((a + b + c) * (b + c - a) * (a + c - b) * (a + b - c))
+        )
 
         # Compare the circumricle radius to radius1 and radius2
-        if cc_radius  > radius1 * REL_TOL:
+        if cc_radius > radius1 * REL_TOL:
             radius1_uncont = True
-        if cc_radius  <= radius2 * REL_TOL:
+        if cc_radius <= radius2 * REL_TOL:
             radius2_cont = True
     # Return True only if both radii conditions are satisfied
     return radius1_uncont and radius2_cont
+
 
 def lic_14():
     """
@@ -502,7 +574,7 @@ def lic_14():
     from the three data points just mentioned) separated by exactly E PTS and F PTS consec-
     utive intervening points, respectively, that are the vertices of a triangle with area less than
     AREA2. Both parts must be true for the LIC to be true. The condition is not met when:
-    
+
     NUMPOINTS < 5.
     0 ≤ AREA2
     """
