@@ -367,15 +367,27 @@ def lic_10(points: list[tuple[float, float]], e_pts: int, f_pts: int, area1) -> 
 
     return False
 
-def lic_11():
+def lic_11(points: list[tuple[float, float]], g_pts: int):
     """
     There exists at least one set of two data points, (X[i],Y[i]) and (X[j],Y[j]), separated by
     exactly G PTS consecutive intervening points, such that X[j] - X[i] < 0. (where i < j ) The
     condition is not met when NUMPOINTS < 3.
 
     1 ≤ G PTS ≤ NUMPOINTS − 2
-    """
 
+    Parameters:
+        points (list[tuple[float, float]]): A list of 2D points [(x1, y1), (x2, y2), ...].
+        g_pts: Number of consecutive intervening points between x_i and x_j.
+    Returns:
+        bool: True if NUMPOINTS >= 3 and there exists at least one set of two data points such that x_j - x_i < 0,
+              False otherwise
+    """
+    if len(points) < 3:
+        return False
+    for (x_i, _), (x_j, _) in zip(points, points[1 + g_pts:]):
+        if x_j - x_i < 0:
+            return True
+    return False
 
 def lic_12():
     """
