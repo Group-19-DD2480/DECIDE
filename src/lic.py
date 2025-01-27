@@ -441,7 +441,9 @@ def lic_11(points: list[tuple[float, float]], g_pts: int):
             return True
     return False
 
-def lic_12():
+def lic_12(
+    points: list[tuple[float, float]], k_pts: int, length_1: float, length_2: float
+) -> bool:
     """
     There exists at least one set of two data points, separated by exactly K PTS consecutive
     intervening points, which are a distance greater than the length, LENGTH1, apart. In addi-
