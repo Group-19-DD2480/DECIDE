@@ -619,3 +619,42 @@ def test_lic_14():
     NUMPOINTS < 5.
     0 ≤ AREA2
     """
+    # Invalid e_pts
+    points = [(0, 0), (1, 1), (2, 2), (3, 3), (4, 4)]
+    e_pts = 0
+    f_pts = 1
+    area1 = 1
+    area2 = 1
+    assert not lic_14(points, e_pts, f_pts, area1, area2)
+
+    # Invalid f_pts
+    points = [(0, 0), (1, 1), (2, 2), (3, 3), (4, 4)]
+    e_pts = 1
+    f_pts = 0
+    area1 = 1
+    area2 = 1
+    assert not lic_14(points, e_pts, f_pts, area1, area2)
+
+    # Valid area1, Invalid area2
+    points = [(0, 0), (0, 0), (0, 2), (1, 0), (4, 0), (0, 2)]
+    e_pts = 1
+    f_pts = 1
+    area1 = 1
+    area2 = -1
+    assert not lic_14(points, e_pts, f_pts, area1, area2)
+
+    # Exact area1 and accepted area 2
+    points = [(0, 0), (0, 0), (1, 0), (1, 0), (0, 2), (0, 2)]
+    e_pts = 1
+    f_pts = 1
+    area1 = 1
+    area2 = 3
+    assert not lic_14(points, e_pts, f_pts, area1, area2)
+
+    # Traingle that accepts area 1 but not 2 and another that accepts area 2 but not 1
+    points = [(0, 0), (0, 0), (2, 0), (1, 0), (0, 2), (0, 1)]
+    e_pts = 1
+    f_pts = 1
+    area1 = 1
+    area2 = 2
+    assert lic_14(points, e_pts, f_pts, area1, area2)
