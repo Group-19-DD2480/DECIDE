@@ -1,9 +1,41 @@
-def Calculate_CMV():
+from lic import *
+from decide import *
+
+def calculate_CMV(points: list[tuple[float, float]], parameters: PARAMETERS_T) -> list[bool]:
     """
-     The Conditions Met Vector (CMV) is set according to the results of the LICs, i.e.
-     the global array element CMV[i] should be set to true if and only if the ith LIC is met.
+    Calculate the Conditions Met Vector (CMV) based on the given points and parameters.
+
+    This function iterates over all 15 Launch Interceptor Conditions (LICs) and sets 
+    the corresponding element in the CMV to True if the LIC is met, and False otherwise.
+
+    Parameters:
+        points (list of tuples): A list of tuples representing points (X, Y).
+        parameters (dict): A dictionary containing the parameters for the LICs.
+        
+    Returns:
+        list of bool: The Conditions Met Vector (CMV) which is set to True if the LIC is met, and False otherwise.
     """
-    pass
+
+    CMV = [False] * 15
+
+    CMV[0] = lic_0(points, parameters.length_1)
+    CMV[1] = lic_1(points, parameters.radius_1)
+    CMV[2] = lic_2(points, parameters.epsilon)
+    CMV[3] = lic_3(points, parameters.area_1)
+    CMV[4] = lic_4(points, parameters.q_pts, parameters.quads)
+    CMV[5] = lic_5(points)
+    CMV[6] = lic_6(points, parameters.n_pts, parameters.dist)
+    CMV[7] = lic_7(points, parameters.k_pts, parameters.length_1)
+    CMV[8] = lic_8(points, parameters.radius_1, parameters.a_pts, parameters.b_pts)
+    CMV[9] = lic_9(points, parameters.c_pts, parameters.d_pts, parameters.epsilon)
+    CMV[10] = lic_10(points, parameters.e_pts, parameters.f_pts, parameters.area_1)
+    CMV[11] = lic_11(points, parameters.g_pts)
+    CMV[12] = lic_12(points, parameters.k_pts, parameters.length_1, parameters.length_2)
+    CMV[14] = lic_14(points, parameters.e_pts, parameters.f_pts, parameters.area_1, parameters.area_2)
+    CMV[13] = lic_13(points, parameters.radius_1, parameters.radius_2, parameters.a_pts, parameters.b_pts)
+
+    return CMV
+
 
 
 def Calculate_PUM(CMV, LCM):
