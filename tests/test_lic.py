@@ -459,6 +459,54 @@ def test_lic_12():
 
     0 ≤ LENGTH2
     """
+    # Both conditions satisfied
+    points = [(0, 0), (1, 1), (6, 6), (10, 10)]
+    k_pts = 1
+    length_1 = 5
+    length_2 = 10
+    assert lic_12(points, k_pts, length_1, length_2)
+
+    # Condition 1 satisfied, Condition 2 not satisfied
+    points = [(0, 0), (1, 1), (6, 6), (10, 10)]
+    k_pts = 1
+    length_1 = 5
+    length_2 = 1
+    assert not lic_12(points, k_pts, length_1, length_2)
+
+    # Condition 2 satisfied, Condition 1 not satisfied
+    points = [(0, 0), (1, 1), (5, 5), (3, 3)]
+    k_pts = 1
+    length_1 = 10
+    length_2 = 3
+    assert not lic_12(points, k_pts, length_1, length_2)
+
+    # NUMPOINTS < 3
+    points = [(0, 0), (1, 1)]
+    k_pts = 1
+    length_1 = 5
+    length_2 = 2
+    assert not lic_12(points, k_pts, length_1, length_2)
+
+    # Invalid k_pts (k_pts > NUMPOINTS - 2)
+    points = [(0, 0), (2, 2), (4, 4), (6, 6)]
+    k_pts = 3
+    length_1 = 1
+    length_2 = 2
+    assert not lic_12(points, k_pts, length_1, length_2)
+
+    # Invalid LENGTH2 (LENGTH2 < 0)
+    points = [(0, 0), (1, 1), (2, 2), (3, 3)]
+    k_pts = 1
+    length_1 = 5
+    length_2 = -1
+    assert not lic_12(points, k_pts, length_1, length_2)
+
+    # Distance exactly equal to LENGTH1 or LENGTH2 (not satisfied)
+    points = [(0, 0), (1, 1), (2, 2)]
+    k_pts = 1
+    length_1 = math.sqrt(8)
+    length_2 = math.sqrt(8)
+    assert not lic_12(points, k_pts, length_1, length_2)
 
 def test_lic_13() -> None:
 

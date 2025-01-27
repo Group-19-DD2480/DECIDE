@@ -441,7 +441,9 @@ def lic_11(points: list[tuple[float, float]], g_pts: int):
             return True
     return False
 
-def lic_12():
+def lic_12(
+    points: list[tuple[float, float]], k_pts: int, length_1: float, length_2: float
+) -> bool:
     """
     There exists at least one set of two data points, separated by exactly K PTS consecutive
     intervening points, which are a distance greater than the length, LENGTH1, apart. In addi-
@@ -452,6 +454,34 @@ def lic_12():
 
     0 ≤ LENGTH2
     """
+    NUMPOINTS = len(points)
+
+    if NUMPOINTS < 3 or k_pts < 1 or k_pts > NUMPOINTS - 2 or length_2 < 0:
+        return False
+
+    condition_1 = False
+    condition_2 = False
+
+    # Check points separated by exactly k_pts intervening points
+    for i in range(NUMPOINTS - k_pts - 1):
+        x1, y1 = points[i]
+        x2, y2 = points[i + k_pts + 1]
+        distance = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+
+        # Check condition 1 (distance > LENGTH1)
+        if distance > length_1:
+            condition_1 = True
+
+        # Check condition 2 (distance < LENGTH2)
+        if distance < length_2:
+            condition_2 = True
+
+        # If both conditions are satisfied, return True
+        if condition_1 and condition_2:
+            return True
+
+    # If the loop ends without returning True, return False
+    return False
 
 def lic_13(points: list[tuple[float, float]], radius1: float, radius2: float, a_pts: int, b_pts: int) -> bool:
     '''
