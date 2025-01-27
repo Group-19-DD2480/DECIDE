@@ -184,6 +184,48 @@ def test_lic_6():
     (3 ≤ N PTS ≤ NUMPOINTS), (0 ≤ DIST)
     """
 
+    points = [(0, 0), (0, 2), (1, 0)]
+    n_pts = 3
+    dist = 1
+    assert lic_6(points, n_pts, dist)
+
+    points = [(4, 0), (0, 0), (0, 1), (0, 2), (0, 0), (1, 0)]
+    n_pts = 5
+    dist = 1
+    assert lic_6(points, n_pts, dist)
+    
+    points = [(0, 0), (0, 1), (1, 0)]
+    n_pts = 3
+    dist = 2
+    assert not lic_6(points, n_pts, dist)
+
+    points = [(4, 0), (0, 0), (0, 1), (1, 1), (0, 0), (1, 0)]
+    n_pts = 5
+    dist = 2
+    assert not lic_6(points, n_pts, dist)
+
+    #exact distance
+    points = [(0, 0), (0, 2), (1, 0)]
+    n_pts = 3
+    dist = 2
+    assert not lic_6(points, n_pts, dist)
+
+    #coincident points
+    points = [(0, 0), (2, 0), (0, 0)]
+    n_pts = 3
+    dist = 1
+    assert lic_6(points, n_pts, dist)
+
+    points = [(0, 0), (1, 0), (0, 0)]
+    n_pts = 3
+    dist = 2
+    assert not lic_6(points, n_pts, dist)
+
+    #exact distance
+    points = [(0, 0), (1, 0), (0, 0)]
+    n_pts = 3
+    dist = 1
+    assert not lic_6(points, n_pts, dist)
 
 def test_lic_7():
     """
