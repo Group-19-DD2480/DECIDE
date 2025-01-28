@@ -21,6 +21,6 @@ def decide(points: list[tuple[float, float]], parameters, LCM: list[list[str]], 
     FUV = calculate_FUV(PUM, PUV)
     is_launch = calculate_launch(FUV)
 
-    # Step 4: Make the Launch Decision
+    # Print the result
     print("YES") if is_launch else print("NO")
     
