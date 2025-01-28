@@ -38,12 +38,33 @@ def calculate_CMV(points: list[tuple[float, float]], parameters: PARAMETERS_T) -
 
 
 
-def Calculate_PUM(CMV, LCM):
+def calculate_PUM(LCM: list[list[str]], CMV: list[bool]) -> list[list[bool]]:
     """
-    Te Preliminary Unlocking Matrix (PUM) is formed by using the Conditions Met Vector (CMV) in conjuction 
+    The Preliminary Unlocking Matrix (PUM) is formed by using the Conditions Met Vector (CMV) in conjuction
     with the Logical Connector Matrix (LCM).
+
+    Parameters:
+        LCM (list[List[str]]): A matrix of bolean operations, ANDD, ORR or NOTUSED.
+        CMV (list[bool]): CMV[i] is True if lic_i returns True.
+
+    Returns:
+        list[list[bool]]: A matrix where each element is the result 
+      of applying the bolean operations specified in LCM to the corresponding elements in CMV.
     """
-    pass
+    ANDD, ORR, NOTUSED = "ANDD", "ORR", "NOTUSED"
+    size = len(CMV)
+    PUM = [[True] * size for _ in range(size)]
+    for i in range(size):
+        for j in range(size):
+            if i == j:
+                continue
+            elif LCM[i][j] == NOTUSED:
+                continue
+            elif LCM[i][j] == ANDD:
+                PUM[i][j] = CMV[i] and CMV[j]
+            elif LCM[i][j] == ORR:
+                PUM[i][j] = CMV[i] or CMV[j]
+    return PUM
 
 
 def Calculate_FUV(PUM, PUV):
