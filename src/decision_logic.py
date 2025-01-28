@@ -1,5 +1,5 @@
 from lic import *
-from decide import *
+from parameters import PARAMETERS_T
 
 def calculate_CMV(points: list[tuple[float, float]], parameters: PARAMETERS_T) -> list[bool]:
     """
