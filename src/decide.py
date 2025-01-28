@@ -1,7 +1,26 @@
-from collections import namedtuple
+import sys
+import os
 
-PARAMETERS_T = namedtuple('PARAMETERS_T', [
-    'length_1', 'radius_1', 'epsilon', 'area_1', 'q_pts', 'quads', 
-    'dist', 'n_pts', 'k_pts', 'a_pts', 'b_pts', 'c_pts', 
-    'd_pts', 'e_pts', 'f_pts', 'g_pts', 'length_2', 'radius_2', 'area_2'
-])
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../src")))
+from decision_logic import calculate_CMV, calculate_PUM, calculate_FUV, calculate_launch
+
+
+def decide(points: list[tuple[float, float]], parameters, LCM: list[list[str]], PUV: list[bool]) -> None:
+    """
+    The main DECIDE function that determine whether to launch an interceptor.
+
+    Parameters:
+        points (list[tuple[float, float]]): List of planar points (x, y).
+        parameters (object): Contains parameters for the LICs.
+        LCM (list[list[str]]): Logical Connector Matrix.
+        PUV (list[bool]): Preliminary Unlocking Vector.
+       
+    """
+    CMV = calculate_CMV(points, parameters)
+    PUM = calculate_PUM(CMV, LCM)
+    FUV = calculate_FUV(PUM, PUV)
+    is_launch = calculate_launch(FUV)
+
+    # Step 4: Make the Launch Decision
+    print("YES") if is_launch else print("NO")
+    
