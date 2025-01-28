@@ -2,6 +2,20 @@ import numpy as np
 import math
 
 
+def distance_between_points(p1: tuple[float, float], p2: tuple[float, float]) -> float:
+    """
+    Calculates the distance between 2 points in a plane. Seems to work with both tuples and np arrays.
+
+    Parameters:
+        p1: point of format (float, float)
+        p2: point of format (float, float)
+
+    Returns:
+        float: The euclidian distance between p1 and p2 in the plane
+    """
+    return np.linalg.norm(np.array(p1) - np.array(p2))
+
+
 def lic_0(points: list[tuple[float, float]], length_1: float) -> bool:
     """
     Determines if there exists at least one set of two consecutive data points
@@ -17,7 +31,7 @@ def lic_0(points: list[tuple[float, float]], length_1: float) -> bool:
     if len(points) < 2:
         return False
     for i in range(len(points) - 1):
-        if np.linalg.norm(np.array(points[i]) - np.array(points[i + 1])) > length_1:
+        if distance_between_points(points[i], points[i + 1]) > length_1:
             return True
     return False
 
@@ -38,9 +52,9 @@ def lic_1(points: list[tuple[float, float]], radius: float) -> bool:
     for set in zip(points, points[1:], points[2:]):
         # Calculate sides of the triangle formed by the points
         set = np.array(set)
-        a = np.linalg.norm(set[0] - set[1])
-        b = np.linalg.norm(set[0] - set[2])
-        c = np.linalg.norm(set[1] - set[2])
+        a = distance_between_points(set[0], set[1])
+        b = distance_between_points(set[0], set[2])
+        c = distance_between_points(set[1], set[2])
 
         # Calculate the circumcircle radius
         cc_radius = (
@@ -71,8 +85,8 @@ def calculate_angle(p1, p2, p3):
     v2 = (p3[0] - p2[0], p3[1] - p2[1])
     dot_product = v1[0] * v2[0] + v1[1] * v2[1]
 
-    mag_v1 = math.sqrt(v1[0] ** 2 + v1[1] ** 2)
-    mag_v2 = math.sqrt(v2[0] ** 2 + v2[1] ** 2)
+    mag_v1 = distance_between_points(p1, p2)
+    mag_v2 = distance_between_points(p3, p2)
 
     # Magnitude is 0, the angle is undefined
     if mag_v1 == 0 or mag_v2 == 0:
@@ -264,7 +278,7 @@ def lic_6(points: list[tuple[float, float]], n_pts: int, dist: float):
 
         #If first and last are equal the distance is calculated from the coincident point.
         if first == last:
-            return math.sqrt((x - x1)**2 + (y - y1)**2)
+            return distance_between_points(first, point)
         
         #Line equation Ax + By + C = 0
         A = y2 - y1
@@ -308,8 +322,8 @@ def lic_7(points: list[tuple[float, float]], k_pts: int, length_1: float) -> boo
     for i in range(NUMPOINTS - k_pts - 1):
         x1, y1 = points[i]
         x2, y2 = points[i + k_pts + 1]  # Separated by k_pts indexing
-        euclidean_dist = np.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
-        if euclidean_dist > length_1:
+ 
+        if distance_between_points((x1, y1), (x2, y2)) > length_1:
             return True
     return False
 
@@ -333,9 +347,9 @@ def lic_8(points: list[tuple[float, float]], radius: float, a_pts: int, b_pts: i
     for set in zip(points, points[1+a_pts:],points[2+a_pts+b_pts:]):
         # Calculate sides of the triangle formed by the points
         set = np.array(set)
-        a = np.linalg.norm(set[0] - set[1])
-        b = np.linalg.norm(set[0] - set[2])
-        c = np.linalg.norm(set[1] - set[2])
+        a = distance_between_points(set[0], set[1])
+        b = distance_between_points(set[0], set[2])
+        c = distance_between_points(set[1], set[2])
 
         # Calculate the circumcircle radius
         cc_radius = a * b * c / np.sqrt((a+b+c)*(b+c-a)*(a+c-b)*(a+b-c))
@@ -464,9 +478,7 @@ def lic_12(
 
     # Check points separated by exactly k_pts intervening points
     for i in range(NUMPOINTS - k_pts - 1):
-        x1, y1 = points[i]
-        x2, y2 = points[i + k_pts + 1]
-        distance = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+        distance = distance_between_points(points[i], points[i+k_pts+1])
 
         # Check condition 1 (distance > LENGTH1)
         if distance > length_1:
@@ -509,9 +521,9 @@ def lic_13(points: list[tuple[float, float]], radius1: float, radius2: float, a_
     for set in zip(points, points[1+a_pts:],points[2+a_pts+b_pts:]):
         # Calculate sides of the triangle formed by the points
         set = np.array(set)
-        a = np.linalg.norm(set[0] - set[1])
-        b = np.linalg.norm(set[0] - set[2])
-        c = np.linalg.norm(set[1] - set[2])
+        a = distance_between_points(set[0], set[1])
+        b = distance_between_points(set[0], set[2])
+        c = distance_between_points(set[1], set[2])
 
         # Calculate the circumcircle radius
         cc_radius = a * b * c / np.sqrt((a+b+c)*(b+c-a)*(a+c-b)*(a+b-c))
