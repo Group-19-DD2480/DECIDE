@@ -52,6 +52,11 @@ def test_lic_1() -> None:
     radius = 1
     assert not lic_1(points, radius)
 
+    # Exact radius acute triangle
+    points = [(0, 1), (1, 0), (-1/math.sqrt(2), -1/math.sqrt(2))]
+    radius = 1
+    assert not lic_1(points, radius)
+
     # Larger radius
     points = [(0, 0), (0, 2), (1, 1)]
     radius = 2
@@ -321,6 +326,13 @@ def test_lic_8() -> None:
 
     # Exact radius
     points = [(0, 0), (-1,-1), (0, 2), (-2,-2), (1,1)]
+    radius = 1
+    a_pts = 1
+    b_pts = 1
+    assert not lic_8(points,radius,a_pts,b_pts)
+
+    # Exact radius acute triangle
+    points = [(0, 1), (0, 0), (1, 0), (0, 0), (-1/math.sqrt(2), -1/math.sqrt(2))]
     radius = 1
     a_pts = 1
     b_pts = 1
@@ -605,6 +617,15 @@ def test_lic_13() -> None:
     a_pts = 1
     b_pts = 1
     assert not lic_13(points,radius1,radius2,a_pts,b_pts)
+
+    
+    # Smaller radius1, exact radius2 for acute triangle
+    points = [(0, 1), (0, 0), (1, 0), (0, 0), (-1/math.sqrt(2), -1/math.sqrt(2))]
+    radius1 = 0.5
+    radius2 = 1
+    a_pts = 1
+    b_pts = 1
+    assert lic_13(points,radius1,radius2,a_pts,b_pts)
 
     # Two sets, none containable by either radius
     points = [(-1,2), (0, 0), (0, 0), (0, 2), (0, 2), (1,2)]
