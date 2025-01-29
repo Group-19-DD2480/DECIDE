@@ -67,7 +67,7 @@ def calculate_PUM(LCM: list[list[str]], CMV: list[bool]) -> list[list[bool]]:
     return PUM
 
 
-def Calculate_FUV(PUM: list[list[bool]], PUV:list[bool]) -> list[bool]:
+def Calculate_FUV(PUM: list[list[bool]], PUV: list[bool]) -> list[bool]:
     """
     The Final Unlocking Vector (FUV) is generated from the Preliminary Unlocking Matrix. The
     input PUV indicates whether the corresponding LIC is to be considered as a factor in signaling
@@ -81,13 +81,8 @@ def Calculate_FUV(PUM: list[list[bool]], PUV:list[bool]) -> list[bool]:
     Returns:
         list[bool]: A boolean list calculated by the rules in the description.
     """
-    FUV = [True for _ in range(15)]
-    for id,pu_value in enumerate(PUV):
-        if pu_value == False:
-            continue
-        pu_row = PUM[id]
-        if not all([pu_row[i] for i in range(len(pu_row)) if i != id]):
-            FUV[id] = False
+    size = len(PUV)
+    FUV = [not PUV[i] or all(PUM[i]) for i in range(size)]
     return FUV
 
 
