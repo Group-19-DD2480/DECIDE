@@ -42,13 +42,17 @@ def lic_1(points: list[tuple[float, float]], radius: float) -> bool:
         b = np.linalg.norm(set[0] - set[2])
         c = np.linalg.norm(set[1] - set[2])
 
-        # Calculate the circumcircle radius
-        cc_radius = (
-            a * b * c / np.sqrt((a + b + c) * (b + c - a) * (a + c - b) * (a + b - c))
-        )
+        # Calculate the smallest radius
+        if (b*b + c*c - a*a) * (a*a + c*c - b*b) * (a*a + b*b - c*c) <= 0:
+            #One angle is not acute
+            min_radius = max(a,b,c)/2
+        else:
+            min_radius = (
+                a * b * c / np.sqrt((a + b + c) * (b + c - a) * (a + c - b) * (a + b - c))
+            )
 
-        # Return True if the circumcircle radius is larger and thus uncontainable by radius
-        if cc_radius > radius * REL_TOL:
+        # Return True if the min radius is larger and thus uncontainable by radius
+        if min_radius > radius * REL_TOL:
             return True
 
     # If all sets are containable
@@ -337,10 +341,17 @@ def lic_8(points: list[tuple[float, float]], radius: float, a_pts: int, b_pts: i
         b = np.linalg.norm(set[0] - set[2])
         c = np.linalg.norm(set[1] - set[2])
 
-        # Calculate the circumcircle radius
-        cc_radius = a * b * c / np.sqrt((a+b+c)*(b+c-a)*(a+c-b)*(a+b-c))
-        # Return True if the circumcircle radius is larger and thus uncontainable by radius
-        if cc_radius  > radius * REL_TOL:
+        # Calculate the smallest radius
+        if (b*b + c*c - a*a) * (a*a + c*c - b*b) * (a*a + b*b - c*c) <= 0:
+            #One angle is not acute
+            min_radius = max(a,b,c)/2
+        else:
+            min_radius = (
+                a * b * c / np.sqrt((a + b + c) * (b + c - a) * (a + c - b) * (a + b - c))
+            )
+
+        # Return True if the min radius is larger and thus uncontainable by radius
+        if min_radius  > radius * REL_TOL:
             return True
 
     # If all sets are containable
@@ -513,14 +524,21 @@ def lic_13(points: list[tuple[float, float]], radius1: float, radius2: float, a_
         b = np.linalg.norm(set[0] - set[2])
         c = np.linalg.norm(set[1] - set[2])
 
-        # Calculate the circumcircle radius
-        cc_radius = a * b * c / np.sqrt((a+b+c)*(b+c-a)*(a+c-b)*(a+b-c))
+        # Calculate the smallest radius
+        if (b*b + c*c - a*a) * (a*a + c*c - b*b) * (a*a + b*b - c*c) <= 0:
+            #One angle is not acute
+            min_radius = max(a,b,c)/2
+        else:
+            min_radius = (
+                a * b * c / np.sqrt((a + b + c) * (b + c - a) * (a + c - b) * (a + b - c))
+            )
 
-        # Compare the circumricle radius to radius1 and radius2
-        if cc_radius  > radius1 * REL_TOL:
+        # Compare the min radius to radius1 and radius2
+        if min_radius  > radius1 * REL_TOL:
             radius1_uncont = True
-        if cc_radius  <= radius2 * REL_TOL:
+        if min_radius  <= radius2 * REL_TOL:
             radius2_cont = True
+
     # Return True only if both radii conditions are satisfied
     return radius1_uncont and radius2_cont
 
