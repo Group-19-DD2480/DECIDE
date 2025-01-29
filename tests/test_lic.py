@@ -7,7 +7,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../src"
 
 from lic import *
 
-
+#################### LICs ####################
 
 """
 There exists at least one set of two consecutive data points that are a distance greater than
@@ -785,3 +785,62 @@ def test_lic_14_invalid() -> None:
     area1 = -1
     area2 = 1
     assert not lic_14(points, e_pts, f_pts, area1, area2)
+
+#################### Helper Functions ####################
+"""
+Calculate the angle formed by three points p1, p2 (vertex), and p3.
+"""
+def test_calculate_angle_positive() -> None:
+    # Test for right angle
+    p1 = (0, 0)
+    p2 = (1, 1)
+    p3 = (0, 1)
+    assert math.isclose(calculate_angle(p1, p2, p3), math.pi / 4, rel_tol=1e-6)
+
+    # Test for collinear points (pi angle)
+    p1 = (0, 0)
+    p2 = (1, 1)
+    p3 = (2, 2)
+    assert calculate_angle(p1, p2, p3) == math.pi
+
+    # Test for collinear points (0 angle)
+    p1 = (-1, -1)
+    p2 = (1, 1)
+    p3 = (0, 0)
+    assert calculate_angle(p1, p2, p3) == 0
+
+def test_calculate_angle_invalid() -> None:
+    # Test for same points
+    p1 = (0, 0)
+    p2 = (0, 0)
+    p3 = (0, 0)
+    assert calculate_angle(p1, p2, p3) == None
+
+
+"""
+Calculate the area of a triangle formed by three points.
+"""
+def test_area_of_triangle_positive() -> None:
+    # Simple right triangle with known area
+    points = np.array([[0, 0], [4, 0], [0, 3]])
+    expected_area = 6.0  # (1/2) * base * height
+    assert area_of_triangle(points) == expected_area
+
+    # Points are collinear, area should be 0
+    points = np.array([[1, 1], [2, 2], [3, 3]])  # All on y = x line
+    assert area_of_triangle(points) == 0.0
+
+    # Triangle where coordinates are negative
+    points = np.array([[-1, -1], [3, -1], [-1, 2]])
+    expected_area = 6.0
+    assert area_of_triangle(points) == expected_area
+
+    # Triangle with very small decimal values to check precision
+    points = np.array([[0.1, 0.1], [0.3, 0.1], [0.1, 0.4]])
+    expected_area = 0.03  # (1/2) * base * height
+    assert math.isclose(area_of_triangle(points), expected_area)
+
+    # Triangle with same points
+    points = np.array([[0, 0], [0, 0], [0, 0]])
+    expected_area = 0.0
+    assert area_of_triangle(points) == expected_area
