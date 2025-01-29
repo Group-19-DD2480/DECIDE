@@ -6,11 +6,6 @@ The program will, based on radar tracking information, evaluate 15 Launch Interc
 
 By default, the launcher is considered locked, and will only unlock if the relevant LICs are met. In addition to the LICs, the function will also take a vector of Preliminary Unlocking Vector (PUV) that determines which LICs are relevant for the decision, and a Logical Connector Matrix (LCM) which determines which LICs have to be considered in conjunction in order for the launch to proceed.
 
-For a more detailed document outlining all requirements, see [the following](docs/decide.pdf).
-
-<mark>NOTE:</mark>  
-Statement of contributions and our way of working can be found in the report in docs/report.md
-
 # Table of Contents
 
 1. [DECIDE](#DECIDE)
