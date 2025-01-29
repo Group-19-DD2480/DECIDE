@@ -82,78 +82,97 @@ The class PARAMETERS_T is composed of the arguments to each LIC and has to be in
 
 ```python
 # Length parameter used in LICs 0, 7, 12
+# Valid values: 0 <= length_1
 # Default: 1.0
 length_1: float
 
 # Radius parameter using in LICs 1, 8, 13
+# Valid values: 0 <= radius_1
 # Default: 1.0
 radius_1: float
 
 # Deviation from PI in LICs 2, 9
+# Valid values: 0 <= epsilon < pi
 # Default: 0.5
 epsilon: float
 
 # Area used in LICs 3, 10, 14
+# Valid values: 0 <= area_1
 # Default: 1.0
 area_1: float
 
 # no. of consecutive points in LIC 4
+# Valid values: 2 <= q_pts <= num_points
 # Default: 2
 q_pts: int
 
 # No. of quadrants in LIC 4
+# Valid values: 1 <= quads <= 3
 # Default:  1
  quads: int
 
 # Distance in LIC 6
+# Valid values: 0 <= dist
 # Default:  1.0
  dist: float
 
 # No. of consecutive points in LIC 6
+# Valid values: 3 <= n_pts <= num_points
 # Default:  3
  n_pts: int
 
 # No. of int. points in LICs 7, 12
+# Valid values: 1 <= k_pts <= (num_points - 2)
 # Default:  1
  k_pts: int
 
 # No. of int. points in LICs 8, 13
+# Valid values: 1 <= a_pts, a_pts + b_pts <= (num_points - 3)
 # Default:  1
  a_pts: int
 
 # No. of int. points in LICs 8, 13
+# Valid values: 1 <= b_pts, a_pts + b_pts <= (num_points - 3)
 # Default:  1
  b_pts: int
 
 # No. of int. points in LICs 9
+# Valid values: 1 <= c_pts, c_pts + d_pts <= (num_points - 3)
 # Default:  1
  c_pts: int
 
 # No. of int. points in LICs 8, 13
+# Valid values: 1 <= d_pts, c_pts + d_pts <= (num_points - 3)
 # Default:  1
  d_pts: int
 
 # No. of int. points in LICs 10, 14
+# Valid values: 1 <= e_pts, e_pts + f_pts <= (num_points - 3)
 # Default:  1
  e_pts: int
 
 # No. of int. points in LICs 10, 14
+# Valid values: 1 <= f_pts, e_pts + f_pts <= (num_points - 3)
 # Default:  1
  f_pts: int
 
 # No. of int. points in LICs 11
+# Valid values: 1 <= f_pts <= num_points - 2
 # Default:  1
  g_pts: int
 
 # Maximum length in LIC 12
+# Valid values: 0 <= length_2
 # Default:  1.0
  length_2: float
 
 # Maximum radius in LIC 13
+# Valid values: 0 <= radius_2
 # Default:  1.0
  radius_2: float
 
 # Maximum area in LIC 14
+# Valid values: 0 <= area_2
 # Default:  1.0
  area_2: float
 ```
