@@ -4,7 +4,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../src")))
 
 from decision_logic import *
-from decide import *
+from parameters import PARAMETERS_T
 from lic import *
 
 def test_cmv() -> None:

@@ -1,5 +1,5 @@
 from lic import *
-from decide import *
+from parameters import PARAMETERS_T
 
 def calculate_CMV(points: list[tuple[float, float]], parameters: PARAMETERS_T) -> list[bool]:
     """
@@ -38,28 +38,69 @@ def calculate_CMV(points: list[tuple[float, float]], parameters: PARAMETERS_T) -
 
 
 
-def Calculate_PUM(CMV, LCM):
+def calculate_PUM(LCM: list[list[str]], CMV: list[bool]) -> list[list[bool]]:
     """
-    Te Preliminary Unlocking Matrix (PUM) is formed by using the Conditions Met Vector (CMV) in conjuction 
+    The Preliminary Unlocking Matrix (PUM) is formed by using the Conditions Met Vector (CMV) in conjuction
     with the Logical Connector Matrix (LCM).
+
+    Parameters:
+        LCM (list[List[str]]): A matrix of bolean operations, ANDD, ORR or NOTUSED.
+        CMV (list[bool]): CMV[i] is True if lic_i returns True.
+
+    Returns:
+        list[list[bool]]: A matrix where each element is the result 
+      of applying the bolean operations specified in LCM to the corresponding elements in CMV.
     """
-    pass
+    ANDD, ORR, NOTUSED = "ANDD", "ORR", "NOTUSED"
+    size = len(CMV)
+    PUM = [[True] * size for _ in range(size)]
+    for i in range(size):
+        for j in range(size):
+            if i == j:
+                continue
+            elif LCM[i][j] == NOTUSED:
+                continue
+            elif LCM[i][j] == ANDD:
+                PUM[i][j] = CMV[i] and CMV[j]
+            elif LCM[i][j] == ORR:
+                PUM[i][j] = CMV[i] or CMV[j]
+    return PUM
 
 
-def Calculate_FUV(PUM, PUV):
+def Calculate_FUV(PUM: list[list[bool]], PUV:list[bool]) -> list[bool]:
     """
     The Final Unlocking Vector (FUV) is generated from the Preliminary Unlocking Matrix. The
     input PUV indicates whether the corresponding LIC is to be considered as a factor in signaling
     interceptor launch. FUV[i] should be set to true if PUV[i] is false (indicating that the associated
     LIC should not hold back launch) or if all elements in PUM row i are true.
+
+    Parameters:
+        PUM (list[List[bool]]): A matrix of boolean values calculated with Calculate_PUM().
+        PUV (list[bool]): PUV[i] is False if lic_i should be ignored.
+
+    Returns:
+        list[bool]: A boolean list calculated by the rules in the description.
     """
-    pass
+    FUV = [True for _ in range(15)]
+    for id,pu_value in enumerate(PUV):
+        if pu_value == False:
+            continue
+        pu_row = PUM[id]
+        if not all([pu_row[i] for i in range(len(pu_row)) if i != id]):
+            FUV[id] = False
+    return FUV
 
 
-def Calculate_Launch(FUV):
+def Calculate_Launch(FUV: list[bool]) -> bool:
     """
     The final launch/no launch decision is based on the FUV. The decision to launch requires that all
     elements in the FUV be true, i.e. LAUNCH should be set to true if and only if FUV[i] is true for
     all i, 0 i 14. Forthe example, LAUNCH is false because FUV[0] is false.
+
+    Parameters:
+        FUV (list[bool]): FUV[i] is True for lic_i which does not block launch.
+
+    Returns:
+        bool: A decision for or against launch 
     """
-    pass
+    return all(FUV)

@@ -21,5 +21,3 @@ class PARAMETERS_T:
     length_2: float = 1.0
     radius_2: float = 1.0
     area_2: float = 1.0
-
-    

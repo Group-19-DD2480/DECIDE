@@ -2,7 +2,7 @@ import sys
 import os
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../src")))
-from decision_logic import calculate_CMV, calculate_PUM, calculate_FUV, calculate_launch
+from decision_logic import calculate_CMV, calculate_PUM, Calculate_FUV, Calculate_Launch
 
 
 def decide(points: list[tuple[float, float]], parameters, LCM: list[list[str]], PUV: list[bool]) -> None:
@@ -17,9 +17,9 @@ def decide(points: list[tuple[float, float]], parameters, LCM: list[list[str]], 
        
     """
     CMV = calculate_CMV(points, parameters)
-    PUM = calculate_PUM(CMV, LCM)
-    FUV = calculate_FUV(PUM, PUV)
-    is_launch = calculate_launch(FUV)
+    PUM = calculate_PUM(LCM, CMV)
+    FUV = Calculate_FUV(PUM, PUV)
+    is_launch = Calculate_Launch(FUV)
 
     # Print the result
     print("YES") if is_launch else print("NO")
