@@ -393,28 +393,29 @@ def test_lic_8_invalid() -> None:
     assert not lic_8(points, radius, a_pts, b_pts)
 
 
-def test_lic_9():
-    """
-    There exists at least one set of three data points separated by exactly C_PTS and D_PTS
-    consecutive intervening points, respectively, that form an angle such that:
-    angle < (PI-EPSILON)
-    or
-    angle > (PI+EPSILON)
-    The second point of the set of three points is always the vertex of the angle. If either the first
-    point or the last point (or both) coincide with the vertex, the angle is undefined and the LIC
-    is not satisfied by those three points. When NUMPOINTS < 5, the condition is not met.
-    1 <= C_PTS, 1 <= D_PTS
-    C_PTS + D_PTS <= NUMPOINTS - 3
-    """
-
+"""
+There exists at least one set of three data points separated by exactly C_PTS and D_PTS
+consecutive intervening points, respectively, that form an angle such that:
+angle < (PI-EPSILON)
+or
+angle > (PI+EPSILON)
+The second point of the set of three points is always the vertex of the angle. If either the first
+point or the last point (or both) coincide with the vertex, the angle is undefined and the LIC
+is not satisfied by those three points. When NUMPOINTS < 5, the condition is not met.
+1 <= C_PTS, 1 <= D_PTS
+C_PTS + D_PTS <= NUMPOINTS - 3
+"""
+def test_lic_9_positive() -> None:
     # Basic valid case
     points = [(0, 0), (1, 2), (2, 0), (3, 1), (0, 4)]
     assert lic_9(points, 1, 1, 0.5)
 
+def test_lic_9_negative() -> None:
     # All points are collinear
     points = [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0)]
     assert not lic_9(points, 1, 1, 0.1)
 
+def test_lic_9_invalid() -> None:
     # Insufficient points
     points = [(0, 0), (1, 1), (2, 0), (3, 1), (4, 0)]
     assert not lic_9(points[:4], 1, 1, 0.1)
@@ -422,6 +423,7 @@ def test_lic_9():
     # No valid angles
     points = [(0, 0), (1, 1), (2, 0), (3, 1), (0, 4)]
     assert not lic_9(points, 1, 1, math.pi)
+
 
 def test_lic_10():
     """
