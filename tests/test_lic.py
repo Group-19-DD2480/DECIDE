@@ -199,16 +199,15 @@ def test_lic_5_negative() -> None:
     assert not lic_5(points)
 
 
-def test_lic_6():
-    """
-    There exists at least one set of N PTS consecutive data points such that at least one of the
-    points lies a distance greater than DIST from the line joining the first and last of these N PTS
-    points. If the first and last points of these N PTS are identical, then the calculated distance
-    to compare with DIST will be the distance from the coincident point to all other points of
-    the N PTS consecutive points. The condition is not met when NUMPOINTS < 3.
-    (3 ≤ N PTS ≤ NUMPOINTS), (0 ≤ DIST)
-    """
-
+"""
+There exists at least one set of N PTS consecutive data points such that at least one of the
+points lies a distance greater than DIST from the line joining the first and last of these N PTS
+points. If the first and last points of these N PTS are identical, then the calculated distance
+to compare with DIST will be the distance from the coincident point to all other points of
+the N PTS consecutive points. The condition is not met when NUMPOINTS < 3.
+(3 ≤ N PTS ≤ NUMPOINTS), (0 ≤ DIST)
+"""
+def test_lic_6_positive() -> None:
     points = [(0, 0), (0, 2), (1, 0)]
     n_pts = 3
     dist = 1
@@ -218,7 +217,14 @@ def test_lic_6():
     n_pts = 5
     dist = 1
     assert lic_6(points, n_pts, dist)
+
+    #coincident points
+    points = [(0, 0), (2, 0), (0, 0)]
+    n_pts = 3
+    dist = 1
+    assert lic_6(points, n_pts, dist)
     
+def test_lic_6_negative() -> None:
     points = [(0, 0), (0, 1), (1, 0)]
     n_pts = 3
     dist = 2
@@ -235,12 +241,7 @@ def test_lic_6():
     dist = 2
     assert not lic_6(points, n_pts, dist)
 
-    #coincident points
-    points = [(0, 0), (2, 0), (0, 0)]
-    n_pts = 3
-    dist = 1
-    assert lic_6(points, n_pts, dist)
-
+    #coincident point
     points = [(0, 0), (1, 0), (0, 0)]
     n_pts = 3
     dist = 2
@@ -251,6 +252,7 @@ def test_lic_6():
     n_pts = 3
     dist = 1
     assert not lic_6(points, n_pts, dist)
+
 
 def test_lic_7():
     """
