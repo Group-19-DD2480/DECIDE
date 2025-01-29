@@ -133,40 +133,52 @@ def test_lic_3_negative() -> None:
     assert not lic_3(points, area)
 
 
-def test_lic_4() -> None:
-    '''
-    There exists at least one set of Q_PTS consecutive data points that lie in more than QUADS
-    quadrants. Where there is ambiguity as to which quadrant contains a given point, priority
-    of decision will be by quadrant number, i.e., I, II, III, IV. For example, the data point (0,0)
-    is in quadrant I, the point (-1,0) is in quadrant II, the point (0,-1) is in quadrant III, the point
-    (0,1) is in quadrant I and the point (1,0) is in quadrant I.
-    (2 <= Q_PTS <= NUMPOINTS),(1 <= QUADS <= 3)
-
-    '''
-
+'''
+There exists at least one set of Q_PTS consecutive data points that lie in more than QUADS
+quadrants. Where there is ambiguity as to which quadrant contains a given point, priority
+of decision will be by quadrant number, i.e., I, II, III, IV. For example, the data point (0,0)
+is in quadrant I, the point (-1,0) is in quadrant II, the point (0,-1) is in quadrant III, the point
+(0,1) is in quadrant I and the point (1,0) is in quadrant I.
+(2 <= Q_PTS <= NUMPOINTS),(1 <= QUADS <= 3)
+'''
+def test_lic_4_positive() -> None:
     # Sufficient points in multiple quadrants
+    q_pts = 4
+    quads = 2
     points = [(1, 1), (-1, 1), (-1, -1), (1, -1)]
-    assert lic_4(points, q_pts=4, quads=2)
-
-    # All points in a single quadrant
-    points = [(1, 1), (2, 2), (3, 3), (4, 4)]
-    assert not lic_4(points, q_pts=3, quads=1)
+    assert lic_4(points, q_pts, quads)
 
     # Exactly the required number of quadrants
+    q_pts = 3
+    quads = 2
     points = [(1, 1), (-1, 1), (-1, -1)]
-    assert lic_4(points, q_pts=3, quads=2)
+    assert lic_4(points, q_pts, quads)
 
+def test_lic_4_negative() -> None:
+    # All points in a single quadrant
+    q_pts = 3
+    quads = 1
+    points = [(1, 1), (2, 2), (3, 3), (4, 4)]
+    assert not lic_4(points, q_pts, quads)
+
+def test_lic_4_invalid() -> None:
     # Not enough consecutive points
+    q_pts = 5
+    quads = 3
     points = [(1, 1), (-1, -1), (1, -1), (-1, 1)]
-    assert not lic_4(points, q_pts=5, quads=3)
+    assert not lic_4(points, q_pts, quads)
 
     # Q_PTS too small
+    q_pts = 1
+    quads = 1
     points = [(1, 1), (2, 2)]
-    assert not lic_4(points, q_pts=1, quads=1)
+    assert not lic_4(points, q_pts, quads)
 
     # QUADS out of range
+    q_pts = 4
+    quads = 4
     points = [(1, 1), (-1, 1), (-1, -1), (1, -1)]
-    assert not lic_4(points, q_pts=4, quads=4)
+    assert not lic_4(points, q_pts, quads)
 
 
 def test_lic_5() -> None:
