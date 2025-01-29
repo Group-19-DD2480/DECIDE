@@ -122,14 +122,15 @@ def test_lic_3_positive() -> None:
     assert lic_3(points, area)
 
 def test_lic_3_negative() -> None:
-    # Invalid area
-    area = -1.0
-    points = [(0, 0), (0, 1), (1, 2)]
-    assert not lic_3(points, area)
-
     # Exact area
     area = 1.0
     points = [(0, 0), (2, 0), (0, 1)]
+    assert not lic_3(points, area)
+
+def test_lic_3_invalid() -> None:
+    # Invalid area 
+    area = -1.0
+    points = [(0, 0), (0, 1), (1, 2)]
     assert not lic_3(points, area)
 
 
