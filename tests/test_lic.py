@@ -254,46 +254,49 @@ def test_lic_6_negative() -> None:
     assert not lic_6(points, n_pts, dist)
 
 
-def test_lic_7():
-    """
-    Tests for the lic_7 function.
-    """
-
+"""
+Determines if there exists at least one set of two data points separated by exactly
+k_pts consecutive intervening points that are a euclidean_dist greater than length_1 apart.
+"""
+def test_lic_7_positive() -> None:
     # Condition met (distance > length_1)
     points = [(0, 0), (1, 1), (6, 6), (10, 10)]
     k_pts = 1
     length_1 = 5
-    assert lic_7(points, k_pts, length_1) == True
+    assert lic_7(points, k_pts, length_1)
 
+def test_lic_7_negative() -> None:
     # Condition not met (all distances <= length_1)
     points = [(0, 0), (1, 1), (2, 2), (3, 3)]
     k_pts = 1
     length_1 = 5
-    assert lic_7(points, k_pts, length_1) == False
-
-    # NUMPOINTS < 3 (invalid case)
-    points = [(0, 0), (1, 1)]
-    k_pts = 1
-    length_1 = 1
-    assert lic_7(points, k_pts, length_1) == False
-
-    # Invalid k_pts (k_pts > NUMPOINTS - 2)
-    points = [(0, 0), (2, 1), (2, 5), (3, 3)]
-    k_pts = 3
-    length_1 = 1
-    assert lic_7(points, k_pts, length_1) == False
-
-    # Invalid k_pts (k_ps < 1)
-    points = [(0, 0), (1, 1), (2, 0), (3, 4)]
-    k_pts = 0
-    length_1 = 1
-    assert lic_7(points, k_pts, length_1) == False
+    assert not lic_7(points, k_pts, length_1)
 
     # Distance exactly equal to length_1 (not > length_1)
     points = [(0, 0), (1, 1), (2, 2)]
     k_pts = 1
     length_1 = np.sqrt(8)  # sqrt((2-0)^2 + (2-0)^2) = sqrt(8)
-    assert lic_7(points, k_pts, length_1) == False
+    assert not lic_7(points, k_pts, length_1)
+
+def test_lic_7_invalid() -> None:
+    # NUMPOINTS < 3 (invalid case)
+    points = [(0, 0), (1, 1)]
+    k_pts = 1
+    length_1 = 1
+    assert not lic_7(points, k_pts, length_1)
+
+    # Invalid k_pts (k_pts > NUMPOINTS - 2)
+    points = [(0, 0), (2, 1), (2, 5), (3, 3)]
+    k_pts = 3
+    length_1 = 1
+    assert not lic_7(points, k_pts, length_1)
+
+    # Invalid k_pts (k_ps < 1)
+    points = [(0, 0), (1, 1), (2, 0), (3, 4)]
+    k_pts = 0
+    length_1 = 1
+    assert not lic_7(points, k_pts, length_1)
+
 
 def test_lic_8() -> None:
     '''
