@@ -5,14 +5,12 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../src"
 
 from decision_logic import calculate_PUM
 
-
-def test_calculate_PUM() -> None:
-    """
-    The Preliminary Unlocking Matrix (PUM) is formed by using the Conditions Met Vector (CMV) in conjuction 
-    with the Logical Connector Matrix (LCM).
-    """
-    ANDD, ORR, NOTUSED = "ANDD", "ORR", "NOTUSED"
-    
+"""
+The Preliminary Unlocking Matrix (PUM) is formed by using the Conditions Met Vector (CMV) in conjuction 
+with the Logical Connector Matrix (LCM).
+"""
+ANDD, ORR, NOTUSED = "ANDD", "ORR", "NOTUSED"
+def test_calculate_PUM_NOTUSED() -> None:
     LCM = [
         [NOTUSED, NOTUSED, NOTUSED, NOTUSED],
         [NOTUSED, NOTUSED, NOTUSED, NOTUSED],
@@ -24,7 +22,8 @@ def test_calculate_PUM() -> None:
         [True, True, True, True], 
         [True, True, True, True], 
         [True, True, True, True]]
-    
+
+def test_calculate_PUM_ORR() -> None:
     LCM = [
         [ORR, ORR, ORR, ORR],
         [ORR, ORR, ORR, ORR],
@@ -37,6 +36,7 @@ def test_calculate_PUM() -> None:
         [True, True, True, True],
         [True, False, True, True]]
     
+def test_calculate_PUM_ANDD() -> None:
     LCM = [
         [ANDD, ANDD, ANDD, ANDD],
         [ANDD, ANDD, ANDD, ANDD],
@@ -48,7 +48,8 @@ def test_calculate_PUM() -> None:
         [False, True, False, False],
         [True, False, True, False],
         [False, False, False, True]]
-    
+
+def test_calculate_PUM_diagonal() -> None:
     LCM = [
         [ANDD, ANDD, ANDD, ANDD],
         [ANDD, ANDD, ANDD, ANDD],
