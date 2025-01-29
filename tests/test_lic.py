@@ -472,15 +472,14 @@ def test_lic_10_invalid() -> None:
     assert not lic_10(points, e_pts, f_pts, area)
 
 
-def test_lic_11():
-    """
-    There exists at least one set of two data points, (X[i],Y[i]) and (X[j],Y[j]), separated by
-    exactly G PTS consecutive intervening points, such that X[j] - X[i] < 0. (where i < j ) The
-    condition is not met when NUMPOINTS < 3.
+"""
+There exists at least one set of two data points, (X[i],Y[i]) and (X[j],Y[j]), separated by
+exactly G PTS consecutive intervening points, such that X[j] - X[i] < 0. (where i < j ) The
+condition is not met when NUMPOINTS < 3.
 
-    1 ≤ G PTS ≤ NUMPOINTS − 2
-    """
-
+1 ≤ G PTS ≤ NUMPOINTS − 2
+"""
+def test_lic_11_positive() -> None:
     g_pts = 1
     points = [(1, 0), (2, 3), (0, 1)]
     assert lic_11(points, g_pts)
@@ -489,14 +488,17 @@ def test_lic_11():
     points = [(0, 1), (1, 2), (3, 4), (4, 5), (0, 6)]
     assert lic_11(points, g_pts)
 
+def test_lic_11_negative() -> None:
     g_pts = 1
     points = [(1, 2), (3, 4), (5, 6), (7, 8)]
     assert not lic_11(points, g_pts)
 
+def test_lic_11_invalid() -> None:
     #NUMPOINTS < 3
     g_pts = 1
     points = [(1, 2), (0, 2)]
     assert not lic_11(points, g_pts)
+
 
 def test_lic_12():
     """
