@@ -449,13 +449,6 @@ def test_lic_10_negative() -> None:
     area = 1
     assert not lic_10(points, e_pts, f_pts, area)
 
-    # Invalid area
-    points = [(0, 0), (0, 0), (0, 2), (1, 0), (4, 0), (0, 2)]
-    e_pts = 1
-    f_pts = 1
-    area = -1
-    assert not lic_10(points, e_pts, f_pts, area)
-
 def test_lic_10_invalid() -> None:
     # Invalid e_pts
     points = [(0, 0), (1, 1), (2, 2), (3, 3), (4, 4)]
@@ -469,6 +462,13 @@ def test_lic_10_invalid() -> None:
     e_pts = 1
     f_pts = 0
     area = 1
+    assert not lic_10(points, e_pts, f_pts, area)
+
+    # Invalid area
+    points = [(0, 0), (0, 0), (0, 2), (1, 0), (4, 0), (0, 2)]
+    e_pts = 1
+    f_pts = 1
+    area = -1
     assert not lic_10(points, e_pts, f_pts, area)
 
 
