@@ -3,6 +3,7 @@ import os
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../src")))
 from decision_logic import calculate_CMV, calculate_PUM, Calculate_FUV, Calculate_Launch
+from parameters import PARAMETERS_T
 
 points: list[tuple[float, float]] = [(0, 1), (2, 3), (4, 5), (6, 7), (8, 9), (10, 11)]
 num_points: int = len(points)
@@ -28,6 +29,7 @@ CMV: list[bool]
 PUV: list[bool] = [True,True,True,True,True,True,True,True,True,True,True,True,True,True,True,]
 FUV = list[bool] 
 launch: bool 
+parameters:PARAMETERS_T = PARAMETERS_T()
 
 
 def decide(points: list[tuple[float, float]], parameters, LCM: list[list[str]], PUV: list[bool]) -> None:
@@ -48,3 +50,7 @@ def decide(points: list[tuple[float, float]], parameters, LCM: list[list[str]], 
 
     # Print the result
     print("YES") if is_launch else print("NO")
+    
+if __name__ == "__main__":
+    decide(points, parameters, LCM, PUV)
+
