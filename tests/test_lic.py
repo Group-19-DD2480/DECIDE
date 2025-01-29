@@ -415,14 +415,14 @@ def test_lic_9_negative() -> None:
     points = [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0)]
     assert not lic_9(points, 1, 1, 0.1)
 
+    # No valid angles
+    points = [(0, 0), (1, 1), (2, 0), (3, 1), (0, 4)]
+    assert not lic_9(points, 1, 1, math.pi)
+
 def test_lic_9_invalid() -> None:
     # Insufficient points
     points = [(0, 0), (1, 1), (2, 0), (3, 1), (4, 0)]
     assert not lic_9(points[:4], 1, 1, 0.1)
-
-    # No valid angles
-    points = [(0, 0), (1, 1), (2, 0), (3, 1), (0, 4)]
-    assert not lic_9(points, 1, 1, math.pi)
 
 
 """
