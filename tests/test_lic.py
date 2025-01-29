@@ -739,22 +739,6 @@ def test_lic_14_positive() -> None:
     assert lic_14(points, e_pts, f_pts, area1, area2)
 
 def test_lic_14_negative() -> None:
-# Valid area1, Invalid area2
-    points = [(0, 0), (0, 0), (0, 2), (1, 0), (4, 0), (0, 2)]
-    e_pts = 1
-    f_pts = 1
-    area1 = 1
-    area2 = -1
-    assert not lic_14(points, e_pts, f_pts, area1, area2)
-
-    # Invalid area1, Valid area2
-    points = [(0, 0), (0, 0), (0, 2), (1, 0), (4, 0), (0, 2)]
-    e_pts = 1
-    f_pts = 1
-    area1 = -1
-    area2 = 1
-    assert not lic_14(points, e_pts, f_pts, area1, area2)
-
     # Exact area1 and accepted area 2
     points = [(0, 0), (0, 0), (1, 0), (1, 0), (0, 2), (0, 2)]
     e_pts = 1
@@ -777,5 +761,21 @@ def test_lic_14_invalid() -> None:
     e_pts = 1
     f_pts = 0
     area1 = 1
+    area2 = 1
+    assert not lic_14(points, e_pts, f_pts, area1, area2)
+
+    # Valid area1, Invalid area2
+    points = [(0, 0), (0, 0), (0, 2), (1, 0), (4, 0), (0, 2)]
+    e_pts = 1
+    f_pts = 1
+    area1 = 1
+    area2 = -1
+    assert not lic_14(points, e_pts, f_pts, area1, area2)
+
+    # Invalid area1, Valid area2
+    points = [(0, 0), (0, 0), (0, 2), (1, 0), (4, 0), (0, 2)]
+    e_pts = 1
+    f_pts = 1
+    area1 = -1
     area2 = 1
     assert not lic_14(points, e_pts, f_pts, area1, area2)
