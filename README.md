@@ -17,7 +17,8 @@ Statement of contributions and our way of working can be found in the report in 
 2. [Installation](#installation)
 3. [Configuration](#configuring-the-program)
 4. [Running the program](#running-the-program)
-5. [License](#license)
+5. [Essence: Our Way of Working](#essence)
+6. [License](#license)
 
 # Installation
 
@@ -160,6 +161,28 @@ q_pts: int
 # Running the program
 
 [//]: <> (TODO: Finish this once we have a solid way of running the program from a main function)
+
+# Essence: Our Way of Working<a name='essence'></a>
+
+At the moment we are in the “Foundation Established” state since we have not met all of the requirements listed in the “In Use” state. The following is an overview of our updated checklist for the “In Use” state:
+
+- [x] The practices and tools are being used to do real work.
+- [x] The use of the practices and tools selected are regularly inspected.
+- [x] The practices and tools are being adapted to the team’s context.
+- [x] The use of the practices and tools is supported by the team.
+- [ ] Procedures are in place to handle feedback on the team’s way of working.
+
+_While the team is reflecting on our way of working, we do not at the moment have procedures in place for this. When someone notices an issue, it is brought up, but not in a structured or standardized way._
+
+- [ ] The practices and tools support team communication and collaboration.
+
+_There are some practices and tools that support team communication and collaboration, however they need to be revised as these practices are somewhat inadequate. An example of this would be the way the team reviews Pull Requests. At the moment, we do not have a solid practice for requesting PR-reviews, it is kind of a free-for-all. This has worked since everybody in the team has been good at checking when a PR is open and in need of review but a solid workflow for this should be established._
+
+---
+
+One obstacle to reach the next state is to establish practices/procedures that enable feedback on the team’s way of working. This could for example be to establish weekly retrospective meetings where the team has the opportunity to review our way of working.
+
+Another obstacle to reach the next state is to establish clearer communication and collaboration guidelines on topics such as how to review other team member’s code. These guidelines should include how to handle Pull Requests in a manner that reduces the time a PR spends in review, how many people should review a PR before merging and how to formally communicate that we want additional opinions or changes.
 
 # License
 
