@@ -253,6 +253,25 @@ def test_lic_6_negative() -> None:
     dist = 1
     assert not lic_6(points, n_pts, dist)
 
+def test_lic_6_invalid() -> None:
+    #too few points
+    points = [(0, 0), (1, 2)]
+    n_pts = 2
+    dist = 1
+    assert not lic_6(points, n_pts, dist)
+
+    #too large n_pts
+    points = [(0, 0), (0, 2), (1, 0)]
+    n_pts = 4
+    dist = 1
+    assert not lic_6(points, n_pts, dist)
+
+    #negative distance
+    points = [(0, 0), (0, 2), (1, 0)]
+    n_pts = 3
+    dist = -1
+    assert not lic_6(points, n_pts, dist)
+
 
 """
 Determines if there exists at least one set of two data points separated by exactly
