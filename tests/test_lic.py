@@ -500,17 +500,17 @@ def test_lic_11_invalid() -> None:
     assert not lic_11(points, g_pts)
 
 
-def test_lic_12():
-    """
-    There exists at least one set of two data points, separated by exactly K PTS consecutive
-    intervening points, which are a distance greater than the length, LENGTH1, apart. In addi-
-    tion, there exists at least one set of two data points (which can be the same or different from
-    the two data points just mentioned), separated by exactly K PTS consecutive intervening
-    points, that are a distance less than the length, LENGTH2, apart. Both parts must be true
-    for the LIC to be true. The condition is not met when NUMPOINTS < 3.
+"""
+There exists at least one set of two data points, separated by exactly K PTS consecutive
+intervening points, which are a distance greater than the length, LENGTH1, apart. In addi-
+tion, there exists at least one set of two data points (which can be the same or different from
+the two data points just mentioned), separated by exactly K PTS consecutive intervening
+points, that are a distance less than the length, LENGTH2, apart. Both parts must be true
+for the LIC to be true. The condition is not met when NUMPOINTS < 3.
 
-    0 ≤ LENGTH2
-    """
+0 ≤ LENGTH2
+"""
+def test_lic_12_positive() -> None:
     # Both conditions satisfied
     points = [(0, 0), (1, 1), (6, 6), (10, 10)]
     k_pts = 1
@@ -518,6 +518,7 @@ def test_lic_12():
     length_2 = 10
     assert lic_12(points, k_pts, length_1, length_2)
 
+def test_lic_12_negative() -> None:
     # Condition 1 satisfied, Condition 2 not satisfied
     points = [(0, 0), (1, 1), (6, 6), (10, 10)]
     k_pts = 1
@@ -532,6 +533,7 @@ def test_lic_12():
     length_2 = 3
     assert not lic_12(points, k_pts, length_1, length_2)
 
+def test_lic_12_invalid() -> None:
     # NUMPOINTS < 3
     points = [(0, 0), (1, 1)]
     k_pts = 1
@@ -559,6 +561,7 @@ def test_lic_12():
     length_1 = math.sqrt(8)
     length_2 = math.sqrt(8)
     assert not lic_12(points, k_pts, length_1, length_2)
+
 
 def test_lic_13() -> None:
 
