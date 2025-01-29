@@ -433,6 +433,13 @@ def test_lic_10():
     area = 1
     assert  not lic_10(points, e_pts, f_pts, area)
 
+    # Invalid area
+    points = [(0, 0), (0, 0), (0, 2), (1, 0), (4, 0), (0, 2)]
+    e_pts = 1
+    f_pts = 1
+    area = -1
+    assert not  lic_10(points, e_pts, f_pts, area)
+
 
 def test_lic_11():
     """
@@ -710,6 +717,14 @@ def test_lic_14():
     f_pts = 1
     area1 = 1
     area2 = -1
+    assert not lic_14(points, e_pts, f_pts, area1, area2)
+
+    # Invalid area1, Valid area2
+    points = [(0, 0), (0, 0), (0, 2), (1, 0), (4, 0), (0, 2)]
+    e_pts = 1
+    f_pts = 1
+    area1 = -1
+    area2 = 1
     assert not lic_14(points, e_pts, f_pts, area1, area2)
 
     # Exact area1 and accepted area 2
