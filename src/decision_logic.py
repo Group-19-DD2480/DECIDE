@@ -67,14 +67,28 @@ def calculate_PUM(LCM: list[list[str]], CMV: list[bool]) -> list[list[bool]]:
     return PUM
 
 
-def Calculate_FUV(PUM, PUV):
+def Calculate_FUV(PUM: list[list[bool]], PUV:list[bool]) -> list[bool]:
     """
     The Final Unlocking Vector (FUV) is generated from the Preliminary Unlocking Matrix. The
     input PUV indicates whether the corresponding LIC is to be considered as a factor in signaling
     interceptor launch. FUV[i] should be set to true if PUV[i] is false (indicating that the associated
     LIC should not hold back launch) or if all elements in PUM row i are true.
+
+    Parameters:
+        PUM (list[List[bool]]): A matrix of boolean values calculated with Calculate_PUM().
+        PUV (list[bool]): PUV[i] is False if lic_i should be ignored.
+
+    Returns:
+        list[bool]: A boolean list calculated by the rules in the description.
     """
-    pass
+    FUV = [True for _ in range(15)]
+    for id,pu_value in enumerate(PUV):
+        if pu_value == False:
+            continue
+        pu_row = PUM[id]
+        if not all([pu_row[i] for i in range(len(pu_row)) if i != id]):
+            FUV[id] = False
+    return FUV
 
 
 def Calculate_Launch(FUV: list[bool]) -> bool:
