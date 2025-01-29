@@ -77,10 +77,16 @@ def Calculate_FUV(PUM, PUV):
     pass
 
 
-def Calculate_Launch(FUV):
+def Calculate_Launch(FUV: list[bool]) -> bool:
     """
     The final launch/no launch decision is based on the FUV. The decision to launch requires that all
     elements in the FUV be true, i.e. LAUNCH should be set to true if and only if FUV[i] is true for
     all i, 0 i 14. Forthe example, LAUNCH is false because FUV[0] is false.
+
+    Parameters:
+        FUV (list[bool]): FUV[i] is True for lic_i which does not block launch.
+
+    Returns:
+        bool: A decision for or against launch 
     """
-    pass
+    return all(FUV)
