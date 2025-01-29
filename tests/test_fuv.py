@@ -18,5 +18,4 @@ def test_fuv() -> None:
     PUM = [true_row,false_row,mixed_row,true_row]+ [true_row for _ in range(11)]
     PUV = [False,False,True,True]+ [False for _ in range(11)]
     expected_FUV = [True,True,False,True]+ [True for _ in range(11)]
-
-    assert (Calculate_FUV(PUM,PUV) == expected_FUV).all()
+    assert Calculate_FUV(PUM,PUV) == expected_FUV
