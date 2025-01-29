@@ -718,35 +718,28 @@ def test_lic_13_invalid() -> None:
     assert not lic_13(points, radius1, radius2, a_pts, b_pts)
 
 
-def test_lic_14():
-    """
-    There exists at least one set of three data points, separated by exactly E PTS and F PTS con-
-    secutive intervening points, respectively, that are the vertices of a triangle with area greater
-    than AREA1. In addition, there exist three data points (which can be the same or different
-    from the three data points just mentioned) separated by exactly E PTS and F PTS consec-
-    utive intervening points, respectively, that are the vertices of a triangle with area less than
-    AREA2. Both parts must be true for the LIC to be true. The condition is not met when:
+"""
+There exists at least one set of three data points, separated by exactly E PTS and F PTS con-
+secutive intervening points, respectively, that are the vertices of a triangle with area greater
+than AREA1. In addition, there exist three data points (which can be the same or different
+from the three data points just mentioned) separated by exactly E PTS and F PTS consec-
+utive intervening points, respectively, that are the vertices of a triangle with area less than
+AREA2. Both parts must be true for the LIC to be true. The condition is not met when:
 
-    NUMPOINTS < 5.
-    0 ≤ AREA2
-    """
-    # Invalid e_pts
-    points = [(0, 0), (1, 1), (2, 2), (3, 3), (4, 4)]
-    e_pts = 0
+NUMPOINTS < 5.
+0 ≤ AREA2
+"""
+def test_lic_14_positive() -> None:
+    # Traingle that accepts area 1 but not 2 and another that accepts area 2 but not 1
+    points = [(0, 0), (0, 0), (2, 0), (1, 0), (0, 2), (0, 1)]
+    e_pts = 1
     f_pts = 1
     area1 = 1
-    area2 = 1
-    assert not lic_14(points, e_pts, f_pts, area1, area2)
+    area2 = 2
+    assert lic_14(points, e_pts, f_pts, area1, area2)
 
-    # Invalid f_pts
-    points = [(0, 0), (1, 1), (2, 2), (3, 3), (4, 4)]
-    e_pts = 1
-    f_pts = 0
-    area1 = 1
-    area2 = 1
-    assert not lic_14(points, e_pts, f_pts, area1, area2)
-
-    # Valid area1, Invalid area2
+def test_lic_14_negative() -> None:
+# Valid area1, Invalid area2
     points = [(0, 0), (0, 0), (0, 2), (1, 0), (4, 0), (0, 2)]
     e_pts = 1
     f_pts = 1
@@ -770,10 +763,19 @@ def test_lic_14():
     area2 = 3
     assert not lic_14(points, e_pts, f_pts, area1, area2)
 
-    # Traingle that accepts area 1 but not 2 and another that accepts area 2 but not 1
-    points = [(0, 0), (0, 0), (2, 0), (1, 0), (0, 2), (0, 1)]
-    e_pts = 1
+def test_lic_14_invalid() -> None:
+    # Invalid e_pts
+    points = [(0, 0), (1, 1), (2, 2), (3, 3), (4, 4)]
+    e_pts = 0
     f_pts = 1
     area1 = 1
-    area2 = 2
-    assert lic_14(points, e_pts, f_pts, area1, area2)
+    area2 = 1
+    assert not lic_14(points, e_pts, f_pts, area1, area2)
+
+    # Invalid f_pts
+    points = [(0, 0), (1, 1), (2, 2), (3, 3), (4, 4)]
+    e_pts = 1
+    f_pts = 0
+    area1 = 1
+    area2 = 1
+    assert not lic_14(points, e_pts, f_pts, area1, area2)
