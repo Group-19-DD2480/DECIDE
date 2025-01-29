@@ -198,6 +198,11 @@ def test_lic_5_negative() -> None:
     points = [(1, 2), (3, 4), (4, 5)]
     assert not lic_5(points)
 
+def test_lic_5_invalid() -> None:
+    #too few points
+    points = [(0, 0)]
+    assert not lic_5(points)
+
 
 """
 There exists at least one set of N PTS consecutive data points such that at least one of the
