@@ -425,15 +425,38 @@ def test_lic_9_invalid() -> None:
     assert not lic_9(points, 1, 1, math.pi)
 
 
-def test_lic_10():
-    """
-    There exists at least one set of three data points separated by exactly E PTS and F PTS con-
-    secutive intervening points, respectively, that are the vertices of a triangle with area greater
-    than AREA1. The condition is not met when NUMPOINTS < 5.
+"""
+There exists at least one set of three data points separated by exactly E PTS and F PTS con-
+secutive intervening points, respectively, that are the vertices of a triangle with area greater
+than AREA1. The condition is not met when NUMPOINTS < 5.
 
-    1 ≤ E PTS, 1 ≤ F PTS
-    E PTS + F PTS ≤ NUMPOINTS − 3
-    """
+1 ≤ E PTS, 1 ≤ F PTS
+E PTS + F PTS ≤ NUMPOINTS − 3
+"""
+def test_lic_10_positive() -> None:
+    # Valid area
+    points = [(0, 0), (0, 0), (0, 2), (1, 0), (4, 0), (0, 2)]
+    e_pts = 1
+    f_pts = 1
+    area = 1
+    assert lic_10(points, e_pts, f_pts, area)
+
+def test_lic_10_negative() -> None:
+    # Exact area
+    points = [(0, 0), (0, 0), (1, 0), (1, 0), (0, 2), (0, 2)]
+    e_pts = 1
+    f_pts = 1
+    area = 1
+    assert not lic_10(points, e_pts, f_pts, area)
+
+    # Invalid area
+    points = [(0, 0), (0, 0), (0, 2), (1, 0), (4, 0), (0, 2)]
+    e_pts = 1
+    f_pts = 1
+    area = -1
+    assert not lic_10(points, e_pts, f_pts, area)
+
+def test_lic_10_invalid() -> None:
     # Invalid e_pts
     points = [(0, 0), (1, 1), (2, 2), (3, 3), (4, 4)]
     e_pts = 0
@@ -447,27 +470,6 @@ def test_lic_10():
     f_pts = 0
     area = 1
     assert not lic_10(points, e_pts, f_pts, area)
-
-    # Valid area
-    points = [(0, 0), (0, 0), (0, 2), (1, 0), (4, 0), (0, 2)]
-    e_pts = 1
-    f_pts = 1
-    area = 1
-    assert  lic_10(points, e_pts, f_pts, area)
-
-    # Exact area
-    points = [(0, 0), (0, 0), (1, 0), (1, 0), (0, 2), (0, 2)]
-    e_pts = 1
-    f_pts = 1
-    area = 1
-    assert  not lic_10(points, e_pts, f_pts, area)
-
-    # Invalid area
-    points = [(0, 0), (0, 0), (0, 2), (1, 0), (4, 0), (0, 2)]
-    e_pts = 1
-    f_pts = 1
-    area = -1
-    assert not  lic_10(points, e_pts, f_pts, area)
 
 
 def test_lic_11():
