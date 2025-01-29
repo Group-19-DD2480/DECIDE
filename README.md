@@ -19,6 +19,7 @@ Statement of contributions and our way of working can be found in the report in 
 4. [Running the program](#running-the-program)
 5. [Essence: Our Way of Working](#essence)
 6. [License](#license)
+7. [Contributions](#contributions)
 
 # Installation
 
@@ -187,3 +188,25 @@ Another obstacle to reach the next state is to establish clearer communication a
 # License
 
 [//]: <> (TODO: Write a proper license)
+
+# Contributions
+
+**Tore Stenberg (HermanKassler):**
+
+Worked on LIC-3, LIC-10, and LIC-14. Wrote the bulk of the README, added global variables and initialized them in decide.py with corresponding tests.
+
+**Zarko Sesto (ErzaDuNord, Zarko Sesto):**
+
+Worked on LIC-1, LIC-8, LIC-13, FUV and LAUNCH. Created tests for the aforementioned.
+
+**Erik Smit (erikgsmit):**
+
+Worked on functionality and testing for LIC-0, LIC-7 and LIC-12. Also implemented the final decision logic (decide function). Some other minor contributions involve setting up the requirements.txt file and PARAMETERS_T dataclass.
+
+**Muhammad Usman (bitGatito):**
+
+Worked on LIC-2, LIC-4, LIC-9. Created calculate_CMV to calculate the CMV. Corresponding tests.
+
+**Ruben Socha (RubenSocha):**
+
+CI with Github Actions, LIC 5, 6 and 11, PUM, some refactoring e.g. FUV.
