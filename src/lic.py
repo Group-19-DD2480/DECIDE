@@ -1,6 +1,8 @@
 import numpy as np
 import math
 
+# Tolerance for exact float matching
+REL_TOL = 1 + 1e-09
 
 def lic_0(points: list[tuple[float, float]], length_1: float) -> bool:
     """
@@ -21,6 +23,23 @@ def lic_0(points: list[tuple[float, float]], length_1: float) -> bool:
             return True
     return False
 
+def minimum_radius(points: list[tuple[float, float]]) -> float:
+    points = np.array(points)
+    # Calculate sides of the triangle formed by the points
+    a = np.linalg.norm(points[0] - points[1])
+    b = np.linalg.norm(points[0] - points[2])
+    c = np.linalg.norm(points[1] - points[2])
+
+    # Calculate the smallest radius
+    if (b*b + c*c - a*a) * (a*a + c*c - b*b) * (a*a + b*b - c*c) <= 0:
+        #One angle is not acute
+        min_radius = max(a,b,c)/2
+    else:
+        min_radius = (
+            a * b * c / np.sqrt((a + b + c) * (b + c - a) * (a + c - b) * (a + b - c))
+        )
+    return min_radius
+
 def lic_1(points: list[tuple[float, float]], radius: float) -> bool:
     """
     There exists at least one set of three consecutive data points
@@ -28,29 +47,11 @@ def lic_1(points: list[tuple[float, float]], radius: float) -> bool:
     (0 ≤ RADIUS1)
 
     """
-
-    # Tolerance for comparing exact radius match
-    REL_TOL = 1 + 1e-09
-
     if radius < 0:
         return False
 
-    for set in zip(points, points[1:], points[2:]):
-        # Calculate sides of the triangle formed by the points
-        set = np.array(set)
-        a = np.linalg.norm(set[0] - set[1])
-        b = np.linalg.norm(set[0] - set[2])
-        c = np.linalg.norm(set[1] - set[2])
-
-        # Calculate the smallest radius
-        if (b*b + c*c - a*a) * (a*a + c*c - b*b) * (a*a + b*b - c*c) <= 0:
-            #One angle is not acute
-            min_radius = max(a,b,c)/2
-        else:
-            min_radius = (
-                a * b * c / np.sqrt((a + b + c) * (b + c - a) * (a + c - b) * (a + b - c))
-            )
-
+    for corners in zip(points, points[1:], points[2:]):
+        min_radius = minimum_radius(corners)
         # Return True if the min radius is larger and thus uncontainable by radius
         if min_radius > radius * REL_TOL:
             return True
@@ -326,29 +327,13 @@ def lic_8(points: list[tuple[float, float]], radius: float, a_pts: int, b_pts: i
     A PTS+B PTS ≤ (NUMPOINTS−3)
 
     '''
-    
-    # Tolerance for comparing exact radius match
-    REL_TOL = 1+1e-09
 
     # Invalid parameters
     if radius < 0 or a_pts < 1 or b_pts <1 or len(points) < a_pts + b_pts + 3:
         return False
 
-    for set in zip(points, points[1+a_pts:],points[2+a_pts+b_pts:]):
-        # Calculate sides of the triangle formed by the points
-        set = np.array(set)
-        a = np.linalg.norm(set[0] - set[1])
-        b = np.linalg.norm(set[0] - set[2])
-        c = np.linalg.norm(set[1] - set[2])
-
-        # Calculate the smallest radius
-        if (b*b + c*c - a*a) * (a*a + c*c - b*b) * (a*a + b*b - c*c) <= 0:
-            #One angle is not acute
-            min_radius = max(a,b,c)/2
-        else:
-            min_radius = (
-                a * b * c / np.sqrt((a + b + c) * (b + c - a) * (a + c - b) * (a + b - c))
-            )
+    for corners in zip(points, points[1+a_pts:],points[2+a_pts+b_pts:]):
+        min_radius = minimum_radius(corners)
 
         # Return True if the min radius is larger and thus uncontainable by radius
         if min_radius  > radius * REL_TOL:
@@ -510,9 +495,6 @@ def lic_13(points: list[tuple[float, float]], radius1: float, radius2: float, a_
     0 ≤ RADIUS2
 
     '''
-    
-    # Tolerance for comparing exact radius match
-    REL_TOL = 1+1e-09
 
     # Invalid parameters
     if radius1 < 0 or radius2 < 0 or a_pts < 1 or b_pts <1 or len(points) < a_pts + b_pts + 3:
@@ -521,21 +503,8 @@ def lic_13(points: list[tuple[float, float]], radius1: float, radius2: float, a_
     radius1_uncont = False
     radius2_cont = False
 
-    for set in zip(points, points[1+a_pts:],points[2+a_pts+b_pts:]):
-        # Calculate sides of the triangle formed by the points
-        set = np.array(set)
-        a = np.linalg.norm(set[0] - set[1])
-        b = np.linalg.norm(set[0] - set[2])
-        c = np.linalg.norm(set[1] - set[2])
-
-        # Calculate the smallest radius
-        if (b*b + c*c - a*a) * (a*a + c*c - b*b) * (a*a + b*b - c*c) <= 0:
-            #One angle is not acute
-            min_radius = max(a,b,c)/2
-        else:
-            min_radius = (
-                a * b * c / np.sqrt((a + b + c) * (b + c - a) * (a + c - b) * (a + b - c))
-            )
+    for corners in zip(points, points[1+a_pts:],points[2+a_pts+b_pts:]):
+        min_radius = minimum_radius(corners)
 
         # Compare the min radius to radius1 and radius2
         if min_radius  > radius1 * REL_TOL:
