@@ -55,10 +55,6 @@ def test_lic_1_positive() -> None:
     assert lic_1(points, radius)
 
 def test_lic_1_negative() -> None:
-    # Invalid radius
-    points = [(0, 0), (0, 2), (1, 1)]
-    radius = -1
-    assert not lic_1(points, radius)
 
     # Exact radius
     points = [(0, 0), (0, 2), (1, 1)]
@@ -80,6 +76,11 @@ def test_lic_1_negative() -> None:
     radius = 1
     assert not lic_1(points, radius)
 
+def test_lic_1_invalid() -> None:
+    # Invalid radius
+    points = [(0, 0), (0, 2), (1, 1)]
+    radius = -1
+    assert not lic_1(points, radius)
 
 """
 There exists at least one set of three consecutive data points which form an angle such that:
