@@ -88,6 +88,11 @@ def calculate_angle(p1, p2, p3):
     # Magnitude is 0, the angle is undefined
     if mag_v1 == 0 or mag_v2 == 0:
         return None
+    
+    determinant = v1[0] * v2[1] - v1[1] * v2[0]
+    if determinant == 0:
+        # If dot product is positive, angle is 0; if negative, angle is PI
+        return 0.0 if dot_product > 0 else math.pi
 
     cos_theta = dot_product / (mag_v1 * mag_v2)
 
