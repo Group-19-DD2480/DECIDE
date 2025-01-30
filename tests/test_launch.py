@@ -13,3 +13,7 @@ def test_launch() -> None:
     assert not Calculate_Launch(false_row)
     mixed_row = [True for _ in range(7)] + [False for _ in range(8)]
     assert not Calculate_Launch(mixed_row)
+
+def test_launch_invalid_length() -> None:
+    short_row = [True for _ in range(14)]
+    assert not Calculate_Launch(short_row)

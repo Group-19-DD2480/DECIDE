@@ -98,4 +98,7 @@ def Calculate_Launch(FUV: list[bool]) -> bool:
     Returns:
         bool: A decision for or against launch 
     """
+    if len(FUV) != 15:
+        return False
+
     return all(FUV)
