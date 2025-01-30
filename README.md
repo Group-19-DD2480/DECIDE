@@ -175,7 +175,13 @@ q_pts: int
 
 # Running the program
 
-[//]: <> (TODO: Finish this once we have a solid way of running the program from a main function)
+The main function of the program is in src/decide.py. In order to run the program, run in terminal:
+
+```
+python src/decide.py
+```
+
+Running the program without modifications will use the default values. In order to modify the input values, either modify the global variables in the file, or modify the values passed to the function.
 
 # Essence: Our Way of Working<a name='essence'></a>
 
