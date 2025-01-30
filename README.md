@@ -183,6 +183,14 @@ python src/decide.py
 
 Running the program without modifications will use the default values. In order to modify the input values, either modify the global variables in the file, or modify the values passed to the function.
 
+### Running the test suite
+
+In order to run the tests, run the pytest command in the virtual environment:
+
+```
+pytest
+```
+
 # Essence: Our Way of Working<a name='essence'></a>
 
 At the moment we are in the “Foundation Established” state since we have not met all of the requirements listed in the “In Use” state. The following is an overview of our updated checklist for the “In Use” state:
