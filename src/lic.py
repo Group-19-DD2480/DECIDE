@@ -27,6 +27,12 @@ def lic_1(points: list[tuple[float, float]], radius: float) -> bool:
     that cannot all be contained within or on a circle of radius RADIUS1.
     (0 ≤ RADIUS1)
 
+    Parameters:
+        points (List[Tuple[float, float]]): List of 2D points [(x1, y1), (x2, y2), ...].
+        radius (float): Radius of a circle (must be non-negative).
+
+    Returns:
+        bool: True if any 3 consecutive points are not containable within a circle with radius from the parameters.
     """
 
     # Tolerance for comparing exact radius match
@@ -325,6 +331,16 @@ def lic_8(points: list[tuple[float, float]], radius: float, a_pts: int, b_pts: i
     1 ≤ A PTS, 1 ≤ B PTS
     A PTS+B PTS ≤ (NUMPOINTS−3)
 
+    Parameters:
+        points (List[Tuple[float, float]]): List of 2D points [(x1, y1), (x2, y2), ...].
+        radius (float): Radius of a circle (must be non-negative).
+        a_pts (int): Amount of points to skip between 1st and 2nd point.
+        b_pts (int): Amount of points to skip between 2nd and 3rd point.
+
+    Returns:
+        bool: True if any 3 points separated by a_pts and b_pts respectively are not containable
+        within a circle with radius from the parameters.
+
     '''
     
     # Tolerance for comparing exact radius match
@@ -509,6 +525,17 @@ def lic_13(points: list[tuple[float, float]], radius1: float, radius2: float, a_
     not met when NUMPOINTS < 5.
     0 ≤ RADIUS2
 
+    Parameters:
+        points (List[Tuple[float, float]]): List of 2D points [(x1, y1), (x2, y2), ...].
+        radius1 (float): Radius of a circle (must be non-negative).
+        radius2 (float): Radius of a circle (must be non-negative).
+        a_pts (int): Amount of points to skip between 1st and 2nd point.
+        b_pts (int): Amount of points to skip between 2nd and 3rd point.
+
+    Returns:
+        bool: True if for any 2 sets of 3 points separated by a_pts and b_pts respectively, on is
+        not containable within a circle with radius1 and other is containable within a cirle with radius2.
+        The sets can be the same.
     '''
     
     # Tolerance for comparing exact radius match
