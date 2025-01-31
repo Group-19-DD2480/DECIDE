@@ -293,6 +293,9 @@ def lic_6(points: list[tuple[float, float]], n_pts: int, dist: float):
     if len(points) < 3:
         return False
     
+    if dist < 0:
+        return False
+    
     for i in range(len(points) - n_pts + 1):
         subset = points[i:i + n_pts]
         first, last = subset[0], subset[-1]
